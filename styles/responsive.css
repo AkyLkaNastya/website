@@ -1,34 +1,73 @@
-/* Для экранов 960-1980px (базовые стили уже подходят) */
+/* Для экранов 960-1200px (оставляем как было) */
+
+/* Базовые стили бургера (скрыт по умолчанию) */
+.burger-icon {
+    display: none;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 30px;
+    height: 21px;
+    cursor: pointer;
+    z-index: 1000;
+}
+
+.burger-icon span {
+    display: block;
+    height: 3px;
+    width: 100%;
+    background: #FFFFFF;
+    transition: all 0.3s;
+}
 
 /* Для экранов 480-960px */
 @media (max-width: 960px) {
-    header {
+    .burger-icon {
+        display: flex;
+        order: 2;
+    }
+    
+    .main-nav {
+        position: fixed;
+        top: 0;
+        left: -100%;
+        width: 70%;
+        height: 100vh;
+        background: #354F4E;
+        transition: left 0.3s;
+        z-index: 999;
+        padding-top: 80px;
+    }
+    
+    .main-nav.active {
+        left: 0;
+    }
+    
+    .main-nav ul {
         flex-direction: column;
-        padding: 10px;
     }
     
-    nav ul {
-        flex-wrap: wrap;
-        justify-content: center;
+    .main-nav li {
+        margin: 15px 20px;
     }
     
-    nav ul li {
-        margin: 5px 10px;
+    .desktop-only {
+        display: block !important; /* Показываем все пункты в мобильном меню */
+    }
+    
+    .shark-icon {
+        order: 1;
+        margin-left: auto;
+        margin-right: 20px;
     }
 }
 
 /* Для экранов 320-480px */
 @media (max-width: 480px) {
-    nav ul {
-        flex-direction: column;
-        align-items: center;
+    .shark-icon {
+        display: none;
     }
     
-    nav ul li {
-        margin: 5px 0;
-    }
-    
-    .logo, .shark {
-        height: 40px;
+    .main-nav {
+        width: 100%;
     }
 }

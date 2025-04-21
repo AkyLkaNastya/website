@@ -48,3 +48,16 @@ main {
     padding: 20px;
     min-height: 80vh;
 }
+
+/* Анимация бургера */
+.burger-icon.active span:nth-child(1) {
+    transform: translateY(9px) rotate(45deg);
+}
+
+.burger-icon.active span:nth-child(2) {
+    opacity: 0;
+}
+
+.burger-icon.active span:nth-child(3) {
+    transform: translateY(-9px) rotate(-45deg);
+}

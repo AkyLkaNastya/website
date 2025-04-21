@@ -1,17 +1,48 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-    <!-- Такие же мета-теги и ссылки на CSS как в index.html -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <link rel="stylesheet" href="styles/main.css">
+    <link rel="stylesheet" href="styles/responsive.css">
+    
     <title>Холсты</title>
 </head>
 <body>
-    <!-- Такой же header как в index.html -->
+    <header>
+        <div class="logo-container">
+            <img src="images/logo.png" alt="Логотип" class="logo">
+        </div>
+        
+        <!-- Бургер-иконка -->
+        <div class="burger-icon" id="burgerIcon">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+        
+        <!-- Основное меню -->
+        <nav class="main-nav" id="mainNav">
+            <ul>
+                <li><a href="portraits.html">ПОРТРЕТЫ</a></li>
+                <li><a href="canvases.html">ХОЛСТЫ</a></li>
+                <li class="desktop-only"><a href="cart.html">КОРЗИНА</a></li>
+                <li class="desktop-only"><a href="faq.html">FAQ</a></li>
+                <li class="desktop-only"><a href="about.html">О НАС</a></li>
+            </ul>
+        </nav>
+        
+        <div class="shark-icon">
+            <img src="images/shark-white.png" alt="Акула" class="shark">
+        </div>
+    </header>
     
     <main>
         <h1>Размеры и формы холстов</h1>
         <p>Здесь будет калькулятор холста</p>
     </main>
 
-    <!-- Такой же script как в index.html -->
+    <script src="scripts/main.js"></script>
 </body>
 </html>
