@@ -1,5 +1,8 @@
 /* Адаптация для 960-1200px */
 @media (max-width: 1200px) {
+
+    /* ================ Колонны =========================================================== */
+
     .left-column {
         width: 68px;
     }
@@ -21,11 +24,28 @@
     
     .right-column::before {
         width: 306px;
+        background: repeating-linear-gradient(
+            to right,
+            #FFFFFF,
+            #FFFFFF 34px,
+            #E1E1E1 34px,
+            #E1E1E1 68px
+        );
+    }
+
+    /* ================ Текст =========================================================== */
+
+    .canvas-text-block {
+        left: 68px; /* Новая ширина левой колонны */
+        right: 306px; /* Новая ширина правой колонны */
     }
 }
 
-/* Убираем колонны на маленьких экранах */
+
 @media (max-width: 960px) {
+
+    /* ================ Колонны =========================================================== */
+
     .columns-container {
         display: none;
     }
@@ -33,4 +53,18 @@
     .content-wrapper {
         padding: 20px 15px;
     }
+
+    /* ================ Текст =========================================================== */
+
+    .canvas-text-block {
+        position: fixed;
+        top: 45%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: calc(100% - 40px); /* 20px отступы с каждой стороны */
+        max-width: 500px;
+        margin: 0;
+        padding: 0 20px;
+        box-sizing: border-box;
+    } 
 }

@@ -12,7 +12,8 @@
     z-index: 1;
 }
 
-/* Стили колонн */
+/* ================ Колонны =========================================================== */
+
 .columns-container {
     position: fixed;
     top: 0;
@@ -62,4 +63,28 @@
 /* Зеркалим правую колонну */
 .right-column::before {
     transform: scaleX(-1);
+}
+
+/* ================ Текст =========================================================== */
+
+/* Основные стили для текстового блока */
+.canvas-text-block {
+    position: absolute;
+    left: 340px; /* Отступ = ширина левой колонны */
+    right: 340px; /* Отступ = ширина правой колонны */
+    top: 80px;
+    text-align: center;
+    transform: none;
+}
+
+.romul-font {
+    font-size: 48px;
+    margin-bottom: 20px;
+}
+
+.canvas-description {
+    font-size: 24px;
+    line-height: 1.4;
+    max-width: 800px;
+    margin: 0 auto;
 }
