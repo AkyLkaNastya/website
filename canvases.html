@@ -6,13 +6,15 @@
     
     <link rel="stylesheet" href="styles/main.css">
     <link rel="stylesheet" href="styles/responsive.css">
+    <link rel="stylesheet" href="styles/canvases.css">
+    <link rel="stylesheet" href="styles/responsive_canvases.css">
     
     <title>Холсты</title>
 </head>
 <body>
     <header>
         <div class="logo-container">
-            <img src="images/logo.png" alt="Логотип" class="logo">
+            <a href="index.html"><img src="images/logo.png" alt="Логотип" class="logo"></a>
         </div>
         
         <!-- Бургер-иконка -->
@@ -38,9 +40,18 @@
         </div>
     </header>
     
-    <main>
-        <h1>Размеры и формы холстов</h1>
-        <p>Здесь будет калькулятор холста</p>
+    <main class="canvases-page">
+        <!-- Колонны (будут позиционированы абсолютно) -->
+        <div class="columns-container">
+            <div class="column left-column"></div>
+            <div class="column right-column"></div>
+        </div>
+        
+        <!-- Основное содержимое страницы -->
+        <div class="content-wrapper">
+            <h1>Размеры и формы холстов</h1>
+            <p>Здесь будет калькулятор холста</p>
+        </div>
     </main>
 
     <script src="scripts/main.js"></script>

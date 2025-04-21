@@ -1,0 +1,65 @@
+/* Общие стили для страницы корзины */
+.cart-page {
+    position: relative;
+    min-height: 80vh;
+}
+
+.content-wrapper {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+    position: relative;
+    z-index: 1;
+}
+
+/* Стили колонн */
+.columns-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: -1;
+}
+
+.column {
+    position: absolute;
+    top: 0;
+    height: 100%;
+    width: 340px;
+    display: flex;
+}
+
+.left-column {
+    left: 0;
+    justify-content: flex-end;
+}
+
+.right-column {
+    right: 0;
+}
+
+/* Полосы в колоннах */
+.column::before {
+    content: "";
+    display: flex;
+    height: 100%;
+}
+
+.left-column::before,
+.right-column::before {
+    width: 340px;
+    background: repeating-linear-gradient(
+        to right,
+        #E1E1E1,
+        #E1E1E1 34px,
+        #FFFFFF 34px,
+        #FFFFFF 68px
+    );
+}
+
+/* Зеркалим правую колонну */
+.right-column::before {
+    transform: scaleX(-1);
+}

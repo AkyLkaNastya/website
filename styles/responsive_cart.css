@@ -1,0 +1,36 @@
+/* Адаптация для 960-1200px */
+@media (max-width: 1200px) {
+    .left-column {
+        width: 68px;
+    }
+    
+    .left-column::before {
+        width: 68px;
+        background: repeating-linear-gradient(
+            to right,
+            #E1E1E1,
+            #E1E1E1 34px,
+            #FFFFFF 34px,
+            #FFFFFF 68px
+        );
+    }
+    
+    .right-column {
+        width: 306px;
+    }
+    
+    .right-column::before {
+        width: 306px;
+    }
+}
+
+/* Убираем колонны на маленьких экранах */
+@media (max-width: 960px) {
+    .columns-container {
+        display: none;
+    }
+    
+    .content-wrapper {
+        padding: 20px 15px;
+    }
+}
