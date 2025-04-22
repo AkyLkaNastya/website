@@ -65,7 +65,7 @@
     transform: scaleX(-1);
 }
 
-/* ================ Текст =========================================================== */
+
 
 /* Основные стили для текстового блока */
 .canvas-text-block {
@@ -87,4 +87,33 @@
     line-height: 1.4;
     max-width: 800px;
     margin: 0 auto;
+}
+
+/* ================ Ползунки =========================================================== */
+
+.right-column-overlay {
+    position: fixed;
+    right: 0;
+    top: 85px; /* Отступ от header */
+    width: 306px;
+    height: 700px;
+    background: #ffffff;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 70px;
+    padding: 40px 28px;
+    box-sizing: border-box;
+    z-index: 10;
+}
+
+.white-block {
+    width: 250px;
+    height: 80px;
+}
+
+/* Скрываем мобильный блок */
+.mobile-scroll-block {
+    display: none;
 }

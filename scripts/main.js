@@ -1,5 +1,6 @@
-// Здесь будет основной JavaScript код
 console.log('Сайт загружен');
+
+// ========== Бургер-меню =======================================================================
 
 document.addEventListener('DOMContentLoaded', function() {
     const burgerIcon = document.getElementById('burgerIcon');
@@ -22,4 +23,25 @@ document.addEventListener('DOMContentLoaded', function() {
             burgerIcon.classList.remove('active');
         });
     });
+});
+
+// ========== Ползунки =======================================================================
+
+// Показываем блок при скролле (мобильная версия)
+window.addEventListener('scroll', function() {
+    const scrollBlock = document.getElementById('mobileScrollBlock');
+    if (window.innerWidth <= 960) {
+        const rect = scrollBlock.getBoundingClientRect();
+        if (rect.top < window.innerHeight * 0.8) {
+            scrollBlock.classList.add('visible');
+        }
+    }
+});
+
+// Инициализация при загрузке
+document.addEventListener('DOMContentLoaded', function() {
+    if (window.innerWidth <= 960) {
+        document.getElementById('mobileScrollBlock').style.marginTop = 
+            window.innerHeight - document.querySelector('header').offsetHeight + 'px';
+    }
 });
