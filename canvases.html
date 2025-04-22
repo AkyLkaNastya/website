@@ -53,18 +53,83 @@
                 <p class="romul-font">ХОЛСТ</p>
                 <p class="canvas-description">На этой странице Вы можете выбрать идеальный холст, используя всего лишь несколько ползунков</p>
             </div>
+            <!-- Для экранов 960+ -->
             <div class="right-column-overlay" id="rightOverlay">
-                <div class="white-block"></div>
-                <div class="white-block"></div>
-                <div class="white-block"></div>
+                <!-- Для ширины -->
+                <div class="control-block">
+                    <div class="control-label">Ширина (см)</div>
+                    <div class="slider-value" id="widthValue">50</div>
+                    <div class="slider-container">
+                        <span class="min-value">10</span>
+                        <input type="range" class="win10-thumb" id="widthSlider" min="10" max="120" value="50" step="10">
+                        <span class="max-value">120</span>
+                    </div>
+                </div>
+
+                <!-- Для высоты -->
+                <div class="control-block">
+                    <div class="control-label">Высота (см)</div>
+                    <div class="slider-value" id="heightValue">50</div>
+                    <div class="slider-container">
+                        <span class="min-value">10</span>
+                        <input type="range" class="win10-thumb" id="heightSlider" min="10" max="120" value="50" step="10">
+                        <span class="max-value">120</span>
+                    </div>
+                </div>
+
+                <!-- Для углов -->
+                <div class="control-block">
+                    <div class="control-label">Углы</div>
+                    <div class="slider-value" id="angleValue">6</div>
+                    <div class="slider-container">
+                        <span class="min-value">4</span>
+                        <input type="range" class="win10-thumb" id="angleSlider" min="4" max="8" value="6" step="1">
+                        <span class="max-value">8</span>
+                    </div>
+                </div>
+                <button class="add-to-cart romul-font">В корзину</button>
             </div>
-            
+
+            <!-- Для экранов 320-960 -->
             <div class="mobile-scroll-block" id="mobileScrollBlock">
-                <div class="bottom-white-part"></div>
+                <div class="bottom-white-part">
+                    <div class="mobile-controls">
+                        <div class="control-block">
+                            <div class="control-label">Ширина (см)</div>
+                            <div class="slider-value" id="mobileWidthValue">50</div>
+                            <div class="slider-container">
+                                <span class="min-value">10</span>
+                                <input type="range" class="win10-thumb" id="mobileWidthSlider" min="10" max="120" value="50" step="10">
+                                <span class="max-value">120</span>
+                            </div>
+                        </div>
+
+                        <div class="control-block">
+                            <div class="control-label">Высота (см)</div>
+                            <div class="slider-value" id="mobileHeightValue">50</div>
+                            <div class="slider-container">
+                                <span class="min-value">10</span>
+                                <input type="range" class="win10-thumb" id="mobileHeightSlider" min="10" max="120" value="50" step="10">
+                                <span class="max-value">120</span>
+                            </div>
+                        </div>
+
+                        <div class="control-block">
+                            <div class="control-label">Углы</div>
+                            <div class="slider-value" id="mobileAngleValue">6</div>
+                            <div class="slider-container">
+                                <span class="min-value">4</span>
+                                <input type="range" class="win10-thumb" id="mobileAngleSlider" min="4" max="8" value="6" step="1">
+                                <span class="max-value">8</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </main>
 
     <script src="scripts/main.js"></script>
+    <script src="scripts/canvases.js"></script>
 </body>
 </html>
