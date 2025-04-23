@@ -18,28 +18,70 @@
 /* Адаптация для экранов 1200+ */
 @media (min-width: 1200px) {
     .column {
-        width: 340px;
+        width: 300px;
     }
     
     .column::before {
-        width: 340px;
+        width: 300px;
     }
 }
 
-/* Адаптация для мобильных (320-960px) */
 @media (max-width: 1200px) {
     .column {
-        width: 170px; /* 5 полос × 34px */
+        width: 150px; /* 5 полос × 34px */
     }
     
     .column::before {
-        width: 170px;
+        width: 150px;
         background: repeating-linear-gradient(
             to right,
             #486564,
-            #486564 34px,
-            #354F4E 34px,
-            #354F4E 68px
+            #486564 30px,
+            #354F4E 30px,
+            #354F4E 60px
+        );
+    }
+    
+    .portraits-content {
+        padding: 80px 15px;
+    }
+
+    .portrait-columns-container {
+        display: block; /* Убедимся что колонны видны */
+    }
+}
+
+@media (max-width: 768px) {
+    .text-columns {
+        grid-template-columns: 1fr;
+    }
+    
+    .left-text {
+        border-right: none;
+        padding-right: 0;
+        border-bottom: 2px solid #e3d5c6;
+        padding-bottom: 20px;
+    }
+    
+    .right-text {
+        padding-left: 0;
+        padding-top: 20px;
+    }
+}
+
+@media (max-width: 400px) {
+    .column {
+        width: 90px; /* 5 полос × 34px */
+    }
+    
+    .column::before {
+        width: 90px;
+        background: repeating-linear-gradient(
+            to right,
+            #486564,
+            #486564 30px,
+            #354F4E 30px,
+            #354F4E 60px
         );
     }
     

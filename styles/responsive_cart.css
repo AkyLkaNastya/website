@@ -7,41 +7,37 @@
         right: 0;
         transform: none;
     }
-    
-    .right-column-overlay {
-        right: calc(50% - 1000px + 34px); /* 34px - отступ как в 1200px+ версии */
-    }
 }
 
 /* Адаптация для 960-1200px */
 @media (max-width: 1200px) {
     .left-column {
-        width: 68px;
+        width: 60px;
     }
     
     .left-column::before {
-        width: 68px;
+        width: 60px;
         background: repeating-linear-gradient(
             to right,
             #E1E1E1,
-            #E1E1E1 34px,
-            #FFFFFF 34px,
-            #FFFFFF 68px
+            #E1E1E1 30px,
+            #FFFFFF 30px,
+            #FFFFFF 60px
         );
     }
     
     .right-column {
-        width: 306px;
+        width: 270px;
     }
     
     .right-column::before {
-        width: 306px;
+        width: 270px;
         background: repeating-linear-gradient(
             to right,
             #FFFFFF,
-            #FFFFFF 34px,
-            #E1E1E1 34px,
-            #E1E1E1 68px
+            #FFFFFF 30px,
+            #E1E1E1 30px,
+            #E1E1E1 60px
         );
     }
 }

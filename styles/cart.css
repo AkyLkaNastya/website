@@ -5,7 +5,7 @@
 }
 
 .content-wrapper {
-    max-width: 1200px;
+    max-width: 2000px;
     margin: 0 auto;
     padding: 20px;
     position: relative;
@@ -27,7 +27,7 @@
     position: absolute;
     top: 0;
     height: 100%;
-    width: 340px;
+    width: 300px;
     display: flex;
 }
 
@@ -49,13 +49,13 @@
 
 .left-column::before,
 .right-column::before {
-    width: 340px;
+    width: 300px;
     background: repeating-linear-gradient(
         to right,
         #E1E1E1,
-        #E1E1E1 34px,
-        #FFFFFF 34px,
-        #FFFFFF 68px
+        #E1E1E1 30px,
+        #FFFFFF 30px,
+        #FFFFFF 60px
     );
 }
 

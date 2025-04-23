@@ -3,7 +3,6 @@
     background-color: #354F4E;
     position: relative;
     min-height: 100vh;
-    color: white;
 }
 
 /* Колонны */
@@ -21,7 +20,7 @@
     position: absolute;
     top: 0;
     height: 100%;
-    width: 340px;
+    width: 300px;
     display: flex;
 }
 
@@ -39,13 +38,13 @@
     content: "";
     display: flex;
     height: 100%;
-    width: 340px;
+    width: 300px;
     background: repeating-linear-gradient(
         to right,
         #354F4E,
-        #354F4E 34px,
-        #486564 34px,
-        #486564 68px
+        #354F4E 30px,
+        #486564 30px,
+        #486564 60px
     );
 }
 
@@ -57,7 +56,297 @@
 .content {
     position: relative;
     z-index: 1;
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 100px 20px;
+    max-width: 2000px;
+}
+
+/* ================ Текст =========================================================== */
+
+.portrait-canvas-frame {
+    max-width: 1000px;
+    margin: 40px 10%;
+    padding: 40px;
+    background: #fff;
+    border: 15px solid #e3d5c6;
+    box-shadow: 8px 8px 0 rgba(0,0,0,0.1);
+    position: relative;
+}
+
+.portrait-canvas-frame:before {
+    content: '';
+    position: absolute;
+    top: -30px;
+    left: -30px;
+    right: -30px;
+    bottom: -30px;
+    border: 2px solid #d4c4b5;
+    z-index: -1;
+}
+
+.text-columns {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
+    margin-top: 30px;
+}
+
+.left-text {
+    font-size: 1.1em;
+    line-height: 1.6;
+    color: #5a4a3a;
+    border-right: 2px solid #e3d5c6;
+    padding-right: 40px;
+}
+
+.right-text {
+    font-size: 1.1em;
+    line-height: 1.6;
+    color: #5a4a3a;
+    padding-left: 40px;
+}
+
+/* ================ Стили =========================================================== */
+
+.portraits-gallery {
+    max-width: 1400px;
+    margin: 60px auto;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 30px;
+    padding: 0 20px;
+}
+
+.portrait-card {
+    background: white;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    transition: transform 0.3s ease;
+}
+
+.portrait-card:hover {
+    transform: translateY(-5px);
+}
+
+/* ================ Карусель =========================================================== */
+.portrait-carousel {
+    position: relative;
+    aspect-ratio: 5/6;
+}
+
+.carousel-slide {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    transition: opacity 0.5s ease;
+}
+
+.carousel-slide.active {
+    opacity: 1;
+}
+
+.portrait-carousel img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.carousel-prev,
+.carousel-next {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(255,255,255,0.8);
+    border: none;
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 1.2em;
+    color: #5a4a3a;
+    transition: all 0.3s ease;
+}
+
+.carousel-prev:hover,
+.carousel-next:hover {
+    background: white;
+    color: #354F4E;
+}
+
+.carousel-prev {
+    left: 10px;
+}
+
+.carousel-next {
+    right: 10px;
+}
+
+/* ================ Информация =========================================================== */
+
+.portrait-info {
+    padding: 10px;
+    text-align: center;
+}
+
+.portrait-info h3 {
+    font-family: 'ROMUL', serif;
+    color: #354F4E;
+    margin: 10px 0;
+    font-size: 18px;
+}
+
+.price-list {
+    margin: 15px 0;
+}
+
+.price-item {
+    display: flex;
+    justify-content: space-between;
+    margin: 8px 0;
+    color: #5a4a3a;
+}
+
+.price {
+    font-weight: bold;
+    color: #486564;
+}
+
+/* ================ В корзину =========================================================== */
+
+.add-to-cart {
+    background: #354F4E;
+    color: white;
+    border: none;
+    padding: 10px 25px;
+    border-radius: 25px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.add-to-cart:hover {
+    background: #486564;
+    transform: scale(1.05);
+}
+
+.handwritten-link {
+    color: #486564;
+    text-decoration: none;
+    border-bottom: 2px dashed #d4c4b5;
+    transition: all 0.3s ease;
+}
+
+.handwritten-link:hover {
+    color: #354F4E;
+    border-bottom-style: solid;
+}
+
+/* ================ Модальное окно =========================================================== */
+
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.5);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 10000;
+    animation: fadeIn 0.3s ease;
+}
+
+.material-modal {
+    background: #fff;
+    padding: 40px;
+    border-radius: 15px;
+    position: relative;
+    width: 90%;
+    max-width: 400px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+}
+
+.close-modal {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    background: none;
+    border: none;
+    font-size: 24px;
+    cursor: pointer;
+    color: #5a4a3a;
+    transition: transform 0.3s ease;
+}
+
+.close-modal:hover {
+    transform: rotate(90deg);
+}
+
+.material-select {
+    width: 100%;
+    padding: 12px;
+    margin: 20px 0;
+    border: 2px solid #e3d5c6;
+    border-radius: 8px;
+    background: #fff;
+    font-size: 16px;
+    color: #5a4a3a;
+    appearance: none;
+    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="%235a4a3a"><path d="M7 10l5 5 5-5z"/></svg>');
+    background-repeat: no-repeat;
+    background-position: right 12px center;
+    background-size: 16px;
+}
+
+.confirm-add {
+    width: 100%;
+    padding: 15px;
+    background: #486564;
+    color: white;
+    border: none;
+    border-radius: 25px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: all 0.3s ease;
+}
+
+.confirm-add:hover {
+    background: #354F4E;
+    transform: translateY(-2px);
+}
+
+/* Стили для облачка */
+.speech-bubble {
+    position: absolute;
+    bottom: calc(100% + 20px);
+    left: 50%;
+    transform: translateX(-50%);
+    width: 250px;
+}
+
+.bubble-content {
+    background: #fff3e6;
+    padding: 15px;
+    border-radius: 12px;
+    position: relative;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    font-size: 14px;
+    line-height: 1.4;
+    color: #5a4a3a;
+}
+
+.bubble-tail {
+    position: absolute;
+    bottom: -10px;
+    left: 50%;
+    width: 20px;
+    height: 20px;
+    background: #fff3e6;
+    transform: translateX(-50%) rotate(45deg);
+    clip-path: polygon(0% 0%, 100% 100%, 0% 100%);
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
 }
