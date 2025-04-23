@@ -1,3 +1,18 @@
+/* Для очень широких экранов (2000px+) */
+@media (min-width: 2000px) {
+    .columns-container {
+        max-width: 2000px;
+        margin: 0 auto;
+        left: 0;
+        right: 0;
+        transform: none;
+    }
+    
+    .right-column-overlay {
+        right: calc(50% - 1000px + 34px); /* 34px - отступ как в 1200px+ версии */
+    }
+}
+
 /* Адаптация для 960-1200px */
 @media (max-width: 1200px) {
     .left-column {
@@ -21,6 +36,13 @@
     
     .right-column::before {
         width: 306px;
+        background: repeating-linear-gradient(
+            to right,
+            #FFFFFF,
+            #FFFFFF 34px,
+            #E1E1E1 34px,
+            #E1E1E1 68px
+        );
     }
 }
 

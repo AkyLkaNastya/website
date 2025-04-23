@@ -3,13 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
+    <title>Портреты</title>
     <link rel="stylesheet" href="styles/main.css">
+    <link rel="stylesheet" href="styles/portraits.css">
     <link rel="stylesheet" href="styles/responsive.css">
-    
-    <title>Стили портретов</title>
+    <link rel="stylesheet" href="styles/responsive_portraits.css">
 </head>
-<body>
+<body class="portraits-page">
     <header>
         <div class="logo-container">
             <a href="index.html"><img src="images/logo.png" alt="Логотип" class="logo"></a>
@@ -37,12 +37,20 @@
             <img src="images/shark-white.png" alt="Акула" class="shark">
         </div>
     </header>
-    
-    <main>
-        <h1>Стили портретов</h1>
-        <p>Здесь будет информация о стилях портретов.</p>
+
+    <!-- Колонны -->
+    <div class="columns-container">
+        <div class="column left-column"></div>
+        <div class="column right-column"></div>
+    </div>
+
+    <!-- Основной контент -->
+    <main class="content">
+        <h1 class="romul-font">СТИЛИ ПОРТРЕТОВ</h1>
+        <!-- Здесь будет контент страницы -->
     </main>
 
     <script src="scripts/main.js"></script>
+    <script src="scripts/portraits.js"></script>
 </body>
 </html>

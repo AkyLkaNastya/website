@@ -1,9 +1,20 @@
+/* Для очень широких экранов (2000px+) */
+@media (min-width: 2000px) {
+    .columns-container {
+        max-width: 2000px;
+        margin: 0 auto;
+        left: 0;
+        right: 0;
+        transform: none;
+    }
+}
+
 /* Для экранов 1200+ px */
 @media (min-width: 1200px) {
 
     /* ================ Ползунки =========================================================== */
     .right-column-overlay {
-        right: 34px;
+        right: 30px;
     }
 }
 
@@ -13,40 +24,40 @@
     /* ================ Колонны =========================================================== */
 
     .left-column {
-        width: 68px;
+        width: 60px;
     }
     
     .left-column::before {
-        width: 68px;
+        width: 60px;
         background: repeating-linear-gradient(
             to right,
             #E1E1E1,
-            #E1E1E1 34px,
-            #FFFFFF 34px,
-            #FFFFFF 68px
+            #E1E1E1 30px,
+            #FFFFFF 30px,
+            #FFFFFF 60px
         );
     }
     
     .right-column {
-        width: 306px;
+        width: 270px;
     }
     
     .right-column::before {
-        width: 306px;
+        width: 270px;
         background: repeating-linear-gradient(
             to right,
             #FFFFFF,
-            #FFFFFF 34px,
-            #E1E1E1 34px,
-            #E1E1E1 68px
+            #FFFFFF 30px,
+            #E1E1E1 30px,
+            #E1E1E1 60px
         );
     }
 
     /* ================ Текст =========================================================== */
 
     .canvas-text-block {
-        left: 68px; /* Новая ширина левой колонны */
-        right: 306px; /* Новая ширина правой колонны */
+        left: 60px; /* Новая ширина левой колонны */
+        right: 270px; /* Новая ширина правой колонны */
     }
 }
 

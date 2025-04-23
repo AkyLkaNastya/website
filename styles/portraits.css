@@ -1,0 +1,63 @@
+/* Основные стили страницы портретов */
+.portraits-page {
+    background-color: #354F4E;
+    position: relative;
+    min-height: 100vh;
+    color: white;
+}
+
+/* Колонны */
+.columns-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: -1;
+}
+
+.column {
+    position: absolute;
+    top: 0;
+    height: 100%;
+    width: 340px;
+    display: flex;
+}
+
+.left-column {
+    left: 0;
+    justify-content: flex-end;
+}
+
+.right-column {
+    right: 0;
+}
+
+/* Полосы в колоннах */
+.column::before {
+    content: "";
+    display: flex;
+    height: 100%;
+    width: 340px;
+    background: repeating-linear-gradient(
+        to right,
+        #354F4E,
+        #354F4E 34px,
+        #486564 34px,
+        #486564 68px
+    );
+}
+
+.right-column::before {
+    transform: scaleX(-1);
+}
+
+/* Контент */
+.content {
+    position: relative;
+    z-index: 1;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 100px 20px;
+}

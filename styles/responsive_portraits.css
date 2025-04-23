@@ -1,0 +1,53 @@
+/* Адаптация для экранов 2000+ */
+@media (min-width: 2000px) {
+    .columns-container {
+        max-width: 2000px;
+        left: 50%;
+        transform: translateX(-50%);
+    }
+    
+    .left-column {
+        left: calc(50% - 1000px);
+    }
+    
+    .right-column {
+        right: calc(50% - 1000px);
+    }
+}
+
+/* Адаптация для экранов 1200+ */
+@media (min-width: 1200px) {
+    .column {
+        width: 340px;
+    }
+    
+    .column::before {
+        width: 340px;
+    }
+}
+
+/* Адаптация для мобильных (320-960px) */
+@media (max-width: 1200px) {
+    .column {
+        width: 170px; /* 5 полос × 34px */
+    }
+    
+    .column::before {
+        width: 170px;
+        background: repeating-linear-gradient(
+            to right,
+            #486564,
+            #486564 34px,
+            #354F4E 34px,
+            #354F4E 68px
+        );
+    }
+    
+    .portraits-content {
+        padding: 80px 15px;
+    }
+
+    .portrait-columns-container {
+        display: block; /* Убедимся что колонны видны */
+    }
+}
