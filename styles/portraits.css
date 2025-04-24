@@ -20,7 +20,7 @@
     position: absolute;
     top: 0;
     height: 100%;
-    width: 300px;
+    width: 220px;
     display: flex;
 }
 
@@ -38,13 +38,13 @@
     content: "";
     display: flex;
     height: 100%;
-    width: 300px;
+    width: 220px;
     background: repeating-linear-gradient(
         to right,
         #354F4E,
-        #354F4E 30px,
-        #486564 30px,
-        #486564 60px
+        #354F4E 22px,
+        #486564 22px,
+        #486564 44px
     );
 }
 

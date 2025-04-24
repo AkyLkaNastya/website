@@ -18,27 +18,27 @@
 /* Адаптация для экранов 1200+ */
 @media (min-width: 1200px) {
     .column {
-        width: 300px;
+        width: 220px;
     }
     
     .column::before {
-        width: 300px;
+        width: 220px;
     }
 }
 
 @media (max-width: 1200px) {
     .column {
-        width: 150px; /* 5 полос × 34px */
+        width: 110px; /* 5 полос × 22px */
     }
     
     .column::before {
-        width: 150px;
+        width: 110px;
         background: repeating-linear-gradient(
             to right,
             #486564,
-            #486564 30px,
-            #354F4E 30px,
-            #354F4E 60px
+            #486564 22px,
+            #354F4E 22px,
+            #354F4E 44px
         );
     }
     
@@ -71,17 +71,17 @@
 
 @media (max-width: 400px) {
     .column {
-        width: 90px; /* 5 полос × 34px */
+        width: 66px; /* 3 полосы × 22px */
     }
     
     .column::before {
-        width: 90px;
+        width: 66px;
         background: repeating-linear-gradient(
             to right,
             #486564,
-            #486564 30px,
-            #354F4E 30px,
-            #354F4E 60px
+            #486564 22px,
+            #354F4E 22px,
+            #354F4E 44px
         );
     }
     

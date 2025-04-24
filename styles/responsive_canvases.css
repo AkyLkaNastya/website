@@ -14,7 +14,7 @@
 
     /* ================ Ползунки =========================================================== */
     .right-column-overlay {
-        right: 30px;
+        right: 22px;
     }
 }
 
@@ -24,40 +24,40 @@
     /* ================ Колонны =========================================================== */
 
     .left-column {
-        width: 60px;
+        width: 44px;
     }
     
     .left-column::before {
-        width: 60px;
+        width: 44px;
         background: repeating-linear-gradient(
             to right,
             #E1E1E1,
-            #E1E1E1 30px,
-            #FFFFFF 30px,
-            #FFFFFF 60px
+            #E1E1E1 22px,
+            #FFFFFF 22px,
+            #FFFFFF 44px
         );
     }
     
     .right-column {
-        width: 270px;
+        width: 198px;
     }
     
     .right-column::before {
-        width: 270px;
+        width: 198px;
         background: repeating-linear-gradient(
             to right,
             #FFFFFF,
-            #FFFFFF 30px,
-            #E1E1E1 30px,
-            #E1E1E1 60px
+            #FFFFFF 22px,
+            #E1E1E1 22px,
+            #E1E1E1 44px
         );
     }
 
     /* ================ Текст =========================================================== */
 
     .canvas-text-block {
-        left: 60px; /* Новая ширина левой колонны */
-        right: 270px; /* Новая ширина правой колонны */
+        left: 44px; /* Новая ширина левой колонны */
+        right: 198px; /* Новая ширина правой колонны */
     }
 }
 

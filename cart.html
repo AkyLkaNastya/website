@@ -50,10 +50,124 @@
         <!-- Основное содержимое страницы -->
         <div class="content-wrapper">
             <h1>Ваша корзина</h1>
-          <p>Здесь будет информация выбранных товарах</p>
+            
+            <!-- Выбранные товары -->
+            <div class="cart-section">
+                <h2>Выбранные товары</h2>
+                
+                <!-- Портрет -->
+                <div class="cart-item" id="portraitItem">
+                    <h3>Портрет</h3>
+                    <div class="item-details">
+                        <p><strong>Стиль:</strong> <span id="portraitStyle">Не выбран</span></p>
+                        <p><strong>Материал:</strong> <span id="portraitMaterial">Не выбран</span></p>
+                    </div>
+                </div>
+                
+                <!-- Холст -->
+                <div class="cart-item" id="canvasItem">
+                    <h3>Холст</h3>
+                    <div class="item-details">
+                        <p><strong>Размер:</strong> <span id="canvasSize">Не выбран</span></p>
+                        <p><strong>Углы:</strong> <span id="canvasCorners">Не выбраны</span></p>
+                    </div>
+                </div>
+                
+                <!-- Альтернативные материалы -->
+                <div class="alternative-materials">
+                    <h3>Или выберите другой материал:</h3>
+                    <div class="material-options">
+                        <label class="material-option">
+                            <input type="checkbox" name="alternativeMaterial" value="jeton"> Жетон
+                        </label>
+                        <label class="material-option">
+                            <input type="checkbox" name="alternativeMaterial" value="tshirt"> Футболка
+                        </label>
+                        <label class="material-option">
+                            <input type="checkbox" name="alternativeMaterial" value="banner"> Баннер
+                        </label>
+                        <label class="material-option">
+                            <input type="checkbox" name="alternativeMaterial" value="sticker"> Наклейки
+                        </label>
+                        <label class="material-option">
+                            <input type="checkbox" name="alternativeMaterial" value="sign"> Табличка
+                        </label>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Загрузка фото -->
+            <div class="cart-section">
+                <h2>Фотография для портрета</h2>
+                <div class="photo-upload">
+                    <div class="upload-box" id="uploadBox">
+                        <input type="file" id="photoInput" accept="image/*" style="display: none;">
+                        <label for="photoInput" class="upload-label">
+                            <div class="upload-icon">+</div>
+                            <div class="upload-text">Загрузите фотографию</div>
+                        </label>
+                    </div>
+                    <div class="upload-preview" id="uploadPreview" style="display: none;">
+                        <img id="previewImage" src="#" alt="Предпросмотр">
+                        <button class="remove-photo" id="removePhoto">×</button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Детали портрета -->
+            <div class="cart-section">
+                <h2>Детали портрета</h2>
+                <div class="portrait-details">
+                    <div class="people-count">
+                        <label for="peopleCount">Количество людей:</label>
+                        <input type="range" id="peopleCount" min="0" max="8" value="1">
+                        <span id="peopleCountValue">1</span>
+                    </div>
+                    <label class="pet-checkbox">
+                        <input type="checkbox" id="hasPet">
+                        <span>Питомец на портрете</span>
+                    </label>
+                </div>
+            </div>
+            
+            <!-- Комментарии -->
+            <div class="cart-section">
+                <h2>Ваши пожелания</h2>
+                <div class="comment-container">
+                    <textarea id="commentField" class="comment-field" placeholder=" "></textarea>
+                    <div class="comment-placeholder">
+                        Здесь Вы можете указать Ваши пожелания: во что одеть, какой цвет поменять, какой фон сделать.<br><br>
+                        Так же Вы можете описать то, чего не видно на фотографии.<br><br>
+                        В общем, всё, что поможет нам осуществить задуманное.
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Обертка -->
+            <div class="cart-section">
+                <h2>Обертка</h2>
+                <div class="gift-wrap-option">
+                    <div class="gift-wrap-box">
+                        <div class="gift-icon">+</div>
+                        <div class="gift-price">500 р</div>
+                    </div>
+                    <label class="gift-wrap-label">
+                        <input type="checkbox" id="giftWrap">
+                        <span>Добавить подарочную упаковку</span>
+                    </label>
+                </div>
+            </div>
+            
+            <!-- Итоговая стоимость -->
+            <div class="cart-total">
+                <h2>Итого:</h2>
+                <div class="total-price" id="totalPrice">0 р</div>
+                <button class="checkout-button">Оформить заказ</button>
+            </div>
         </div>
     </main>
 
     <script src="scripts/main.js"></script>
+    <script src="scripts/cart.js"></script>
 </body>
 </html>
