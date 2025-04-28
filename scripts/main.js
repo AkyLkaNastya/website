@@ -24,3 +24,15 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 });
+
+// ========== Выпадающее меню =======================================================================
+
+// Добавить обработчик для мобильного меню
+document.querySelectorAll('.dropdown > a').forEach(item => {
+    item.addEventListener('click', (e) => {
+        if (window.innerWidth <= 960) {
+            e.preventDefault();
+            item.parentElement.classList.toggle('active');
+        }
+    });
+});
