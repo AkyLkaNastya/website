@@ -11,30 +11,61 @@
 </head>
 <body class="portraits-page">
     <header>
-        <div class="logo-container">
-            <a href="index.html"><img src="images/logo.png" alt="Логотип" class="logo"></a>
-        </div>
-        
-        <!-- Бургер-иконка -->
-        <div class="burger-icon" id="burgerIcon">
-            <span></span>
-            <span></span>
-            <span></span>
-        </div>
-        
-        <!-- Основное меню -->
-        <nav class="main-nav" id="mainNav">
-            <ul>
-                <li><a href="portraits.html">ПОРТРЕТЫ</a></li>
-                <li><a href="canvases.html">ХОЛСТЫ</a></li>
-                <li class="desktop-only"><a href="cart.html">КОРЗИНА</a></li>
-                <li class="desktop-only"><a href="faq.html">FAQ</a></li>
-                <li class="desktop-only"><a href="about.html">О НАС</a></li>
-            </ul>
-        </nav>
-        
-        <div class="shark-icon">
-            <img src="images/shark-white.png" alt="Акула" class="shark">
+        <div class="header-container">
+            <div class="logo-container">
+                <a href="index.html"><img src="images/logo.png" alt="Логотип" class="logo"></a>
+            </div>
+            
+            <!-- Бургер-иконка -->
+            <div class="burger-icon" id="burgerIcon">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+            
+            <!-- Основное меню -->
+            <nav class="main-nav" id="mainNav">
+                <ul>
+                    <li class="desktop-only"><a href="cart.html">КОРЗИНА</a></li>
+                    <li class="dropdown">
+                        <a href="#">ОСНОВА</a>
+                        <ul class="submenu">
+                            <li><a href="canvases.html">Холсты</a></li>
+                            <li><a href="bases.html">Прочие материалы</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="portraits.html">СТИЛИ ПОРТРЕТОВ</a></li>
+                    <li class="desktop-only"><a href="about.html">О НАС</a></li>
+                    <li class="desktop-only"><a href="faq.html">FAQ</a></li>
+                </ul>
+                
+                <!-- Контактная информация для мобильного меню -->
+                <div class="mobile-contact-info">
+                    <div class="welcome-text">Всегда Вам рады!</div>
+                    <div class="phone-number">+7 920 016-01-83</div>
+                    
+                    <div class="social-links">
+                        <a href="https://instagram.com/akylka_print" target="_blank">
+                            <img src="images/icon-instagram.png" alt="Instagram">
+                        </a>
+                        <a href="https://vk.com/akylkaprint" target="_blank">
+                            <img src="images/icon-vk.png" alt="VK">
+                        </a>
+                        <a href="https://t.me/akylka_print" target="_blank">
+                            <img src="images/icon-telegram.png" alt="Telegram">
+                        </a>
+                    </div>
+                </div>
+            </nav>
+            
+            <div class="contact-info">
+                <div class="welcome-text">Всегда Вам рады!</div>
+                <div class="phone-number">+7 920 016-01-83</div>
+            </div>
+            
+            <div class="shark-icon">
+                <img src="images/shark-white.png" alt="Акула" class="shark">
+            </div>
         </div>
     </header>
 
