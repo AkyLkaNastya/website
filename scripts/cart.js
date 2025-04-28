@@ -10,6 +10,9 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Обработчик альтернативных материалов
     setupAlternativeMaterials();
+
+    // Обёртка
+    setupGiftWrap();
     
     // Обработчик комментариев
     setupCommentField();
@@ -120,6 +123,72 @@ function setupCommentField() {
     commentField.addEventListener('input', function() {
         placeholder.style.opacity = this.value.trim() !== '' ? '0' : '0.7';
     });
+}
+
+// Обёртка
+function setupGiftWrap() {
+    const giftWrapTrigger = document.getElementById('giftWrapTrigger');
+    const giftWrapModal = document.getElementById('giftWrapModal');
+    const closeModal = giftWrapModal.querySelector('.close-modal');
+    const wrapOptions = giftWrapModal.querySelector('.wrap-options');
+    const giftWrapPrice = document.getElementById('giftWrapPrice');
+    
+    // Создаем варианты обертки
+    const wrapPrices = ['Бесплатно', '100 ₽', '100 ₽', '100 ₽', '100 ₽', '100 ₽', '100 ₽', '100 ₽', '100 ₽'];
+    
+    for (let i = 0; i < 9; i++) {
+        const wrapOption = document.createElement('div');
+        wrapOption.className = 'wrap-option';
+        wrapOption.dataset.index = i;
+        
+        wrapOption.innerHTML = `
+            <img src="images/wrappers/${i}.jpg" alt="Обертка ${i}" class="wrap-image">
+            <div class="wrap-price">${wrapPrices[i]}</div>
+        `;
+        
+        wrapOption.addEventListener('click', function() {
+            // Обновляем выбранную обертку
+            const selectedIndex = this.dataset.index;
+            updateSelectedWrap(selectedIndex);
+            giftWrapModal.style.display = 'none';
+        });
+        
+        wrapOptions.appendChild(wrapOption);
+    }
+    
+    // Открытие модального окна
+    giftWrapTrigger.addEventListener('click', function() {
+        giftWrapModal.style.display = 'flex';
+    });
+    
+    // Закрытие модального окна
+    closeModal.addEventListener('click', function() {
+        giftWrapModal.style.display = 'none';
+    });
+    
+    giftWrapModal.addEventListener('click', function(e) {
+        if (e.target === giftWrapModal) {
+            giftWrapModal.style.display = 'none';
+        }
+    });
+    
+    function updateSelectedWrap(index) {
+        // Обновляем отображение выбранной обертки
+        const wrapImage = document.querySelector(`.wrap-option[data-index="${index}"] .wrap-image`).src;
+        const wrapPrice = wrapPrices[index];
+        
+        giftWrapTrigger.innerHTML = `
+            <img src="${wrapImage}" alt="Выбранная обертка" class="wrap-image">
+        `;
+        
+        giftWrapPrice.textContent = wrapPrice;
+        
+        // Обновляем итоговую стоимость
+        updateTotalPrice();
+    }
+    
+    // Инициализация при загрузке
+    updateSelectedWrap(0);
 }
 
 function updateTotalPrice() {

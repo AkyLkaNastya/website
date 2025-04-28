@@ -133,28 +133,48 @@
             <!-- Комментарии -->
             <div class="cart-section">
                 <h2>Ваши пожелания</h2>
+                <div class="comment-hint">
+                    Здесь Вы можете указать Ваши пожелания: в каком образе сделать, какой цвет поменять, какой фон сделать.<br><br>
+                    Так же Вы можете описать то, чего не видно на фотографии.<br><br>
+                    В общем, всё, что поможет нам осуществить задуманное.
+                </div>
                 <div class="comment-container">
                     <textarea id="commentField" class="comment-field" placeholder=" "></textarea>
-                    <div class="comment-placeholder">
-                        Здесь Вы можете указать Ваши пожелания: во что одеть, какой цвет поменять, какой фон сделать.<br><br>
-                        Так же Вы можете описать то, чего не видно на фотографии.<br><br>
-                        В общем, всё, что поможет нам осуществить задуманное.
-                    </div>
                 </div>
             </div>
             
             <!-- Обертка -->
             <div class="cart-section">
                 <h2>Обертка</h2>
-                <div class="gift-wrap-option">
-                    <div class="gift-wrap-box">
-                        <div class="gift-icon">+</div>
-                        <div class="gift-price">500 р</div>
+                <div class="gift-wrap-container">
+                    <div class="gift-wrap-main">
+                        <div class="gift-wrap-box" id="giftWrapTrigger">
+                            <div class="gift-icon">+</div>
+                            <div class="gift-default-text">Выбрать обертку</div>
+                        </div>
+                        
+                        <div class="gift-wrap-bubble">
+                            <div class="bubble-content">
+                                Все портреты мы <span class="highlight">всегда</span> красиво упаковываем в крафтовую бумагу и украшаем ленточкой, но вы можете выбрать другую бумагу
+                                <div class="bubble-tail"></div>
+                            </div>
+                        </div>
                     </div>
-                    <label class="gift-wrap-label">
-                        <input type="checkbox" id="giftWrap">
-                        <span>Добавить подарочную упаковку</span>
-                    </label>
+                    
+                    <!-- Модальное окно с выбором обертки -->
+                    <div class="gift-wrap-modal" id="giftWrapModal">
+                        <div class="modal-content">
+                            <h3>Выберите обертку</h3>
+                            <div class="wrap-options">
+                                <!-- Варианты будут добавлены через JS -->
+                            </div>
+                            <button class="close-modal">&times;</button>
+                        </div>
+                    </div>
+                    
+                    <div class="gift-wrap-price" id="giftWrapPrice">
+                        Бесплатно
+                    </div>
                 </div>
             </div>
             
