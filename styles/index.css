@@ -1,3 +1,5 @@
+/* ================ Основное =========================================================== */
+
 main {
     padding: 0;
     min-height: 80vh;
@@ -214,7 +216,7 @@ section {
     color: #d4c4b5;
 }
 
-/* Процесс создания */
+/* ================ Процесс создания =========================================================== */
 .process-section {
     background-color: #354F4E;
     color: #fff;
@@ -267,64 +269,7 @@ section {
     opacity: 0.9;
 }
 
-/* Отзывы */
-.testimonials-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 30px;
-}
-
-.testimonial-card {
-    background-color: #fff;
-    border-radius: 5px;
-    padding: 30px;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
-}
-
-.testimonial-text {
-    font-size: 1.1rem;
-    font-style: italic;
-    line-height: 1.6;
-    margin-bottom: 20px;
-    color: #555;
-    position: relative;
-}
-
-.testimonial-text::before {
-    content: '"';
-    font-size: 3rem;
-    position: absolute;
-    top: -15px;
-    left: -15px;
-    color: #d4c4b5;
-    opacity: 0.3;
-}
-
-.testimonial-author {
-    display: flex;
-    align-items: center;
-}
-
-.testimonial-author img {
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
-    object-fit: cover;
-    margin-right: 15px;
-}
-
-.testimonial-author h4 {
-    font-size: 1.1rem;
-    margin-bottom: 5px;
-    color: #354F4E;
-}
-
-.testimonial-author p {
-    font-size: 0.9rem;
-    color: #888;
-}
-
-/* CTA секция */
+/* ================ СТА секция =========================================================== */
 .cta-section {
     background-color: #d4c4b5;
     text-align: center;
@@ -351,24 +296,13 @@ section {
     gap: 20px;
 }
 
-.cta-button.primary {
+.cta-button {
     background-color: #354F4E;
     color: #fff;
     border-color: #354F4E;
 }
 
-.cta-button.primary:hover {
+.cta-button:hover {
     background-color: transparent;
     color: #354F4E;
-}
-
-.cta-button.secondary {
-    background-color: transparent;
-    color: #354F4E;
-    border-color: #354F4E;
-}
-
-.cta-button.secondary:hover {
-    background-color: #354F4E;
-    color: #fff;
 }

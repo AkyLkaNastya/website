@@ -1,4 +1,3 @@
-/* Общие стили */
 /* Подключение шрифтов */
 @font-face {
     font-family: 'Century Gothic';
@@ -54,17 +53,20 @@ main {
 
 /* ================ Шапка =========================================================== */
 header {
+    overflow: visible;
     background-color: #354F4E;
     margin: 0 auto;
 }
 
 .header-container {
+    position: relative; /* Добавьте это */
+    z-index: 1000;      /* Создаст новый контекст */
     display: flex;
     justify-content: space-between;
     align-items: center;
     margin: 0 auto;
     max-width: 1200px;
-    padding: 15px 20px;
+    padding: 10px 10px;
 }
 
 .logo-container, .shark-icon {
@@ -169,10 +171,9 @@ nav ul li:hover a::before {
     transform: translateX(-50%);
 	padding-top: 10px;
     padding-bottom: 10px;
-    margin-top: -15px;
     background: #d4c4b5;
     border: 12px solid #FFFFFF;
-    z-index: 1000;
+    z-index: 3000;
     text-align: center;
 }
 
@@ -190,7 +191,7 @@ nav ul li:hover a::before {
 .dropdown:hover .submenu,
 .submenu:hover {
     display: block;
-    animation: none; /* Отключаем анимацию при постоянном ховере */
+    animation: none;
 }
 
 .submenu li {
@@ -209,7 +210,7 @@ nav ul li:hover a::before {
 }
 
 .submenu li a::before {
-	background-color: transparent !important; /* Отключаем фон псевдоэлемента */
+	background-color: transparent !important;
 }
 
 @keyframes fadeIn {
