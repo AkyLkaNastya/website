@@ -24,6 +24,10 @@
     .column::before {
         width: 220px;
     }
+
+    .portraits-gallery {
+        padding: 0 100px;
+    }
 }
 
 @media (max-width: 1200px) {
@@ -35,10 +39,10 @@
         width: 110px;
         background: repeating-linear-gradient(
             to right,
-            #486564,
-            #486564 22px,
-            #354F4E 22px,
-            #354F4E 44px
+            #222222,
+            #222222 22px,
+            #0d0d0d 22px,
+            #0d0d0d 44px
         );
     }
     
@@ -48,6 +52,10 @@
 
     .portrait-columns-container {
         display: block; /* Убедимся что колонны видны */
+    }
+
+    .portraits-gallery {
+        padding: 0 20px;
     }
 }
 
@@ -78,10 +86,10 @@
         width: 66px;
         background: repeating-linear-gradient(
             to right,
-            #486564,
-            #486564 22px,
-            #354F4E 22px,
-            #354F4E 44px
+            #222222,
+            #222222 22px,
+            #0d0d0d 22px,
+            #0d0d0d 44px
         );
     }
     

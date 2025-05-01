@@ -1,11 +1,10 @@
-/* Основные стили страницы портретов */
 .portraits-page {
-    background-color: #354F4E;
+    background: #0d0d0d;
     position: relative;
     min-height: 100vh;
 }
 
-/* Колонны */
+/* ================ Колонны =========================================================== */
 .columns-container {
     position: fixed;
     top: 0;
@@ -41,10 +40,10 @@
     width: 220px;
     background: repeating-linear-gradient(
         to right,
-        #354F4E,
-        #354F4E 22px,
-        #486564 22px,
-        #486564 44px
+        #0d0d0d,
+        #0d0d0d 22px,
+        #222222 22px,
+        #222222 44px
     );
 }
 
@@ -65,8 +64,8 @@
     max-width: 1000px;
     margin: 40px 10%;
     padding: 40px;
-    background: #fff;
-    border: 15px solid #e3d5c6;
+    background: #f0e1d1;
+    border: 15px solid #c0ad9a;
     box-shadow: 8px 8px 0 rgba(0,0,0,0.1);
     position: relative;
 }
@@ -78,7 +77,7 @@
     left: -30px;
     right: -30px;
     bottom: -30px;
-    border: 2px solid #d4c4b5;
+    border: 2px solid #c0ad9a;
     z-index: -1;
 }
 
@@ -93,7 +92,7 @@
     font-size: 1.1em;
     line-height: 1.6;
     color: #5a4a3a;
-    border-right: 2px solid #e3d5c6;
+    border-right: 2px solid #FFF;
     padding-right: 40px;
 }
 
@@ -112,33 +111,63 @@
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
     gap: 30px;
-    padding: 0 20px;
 }
 
 .portrait-card {
-    background: white;
-    border-radius: 10px;
+    background: #272727;
+    border-radius: 8px;
     overflow: hidden;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-    transition: transform 0.3s ease;
+    position: relative;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    box-shadow: 0 0 30px rgba(255, 255, 255, 0.1);
+}
+
+.portrait-card::before {
+    content: '';
+    position: absolute;
+    top: -2px;
+    left: -2px;
+    right: -2px;
+    bottom: -2px;
+    background: linear-gradient(45deg, #e3d5c6, #d4c4b5, #8a7968);
+    z-index: -1;
+    opacity: 0;
+    transition: opacity 0.3s ease;
 }
 
 .portrait-card:hover {
-    transform: translateY(-5px);
+    transform: translateY(-10px);
+    box-shadow: 0 10px 40px rgba(227, 213, 198, 0.3);
+}
+
+.portrait-card:hover::before {
+    opacity: 0.3;
 }
 
 /* ================ Карусель =========================================================== */
 .portrait-carousel {
     position: relative;
-    aspect-ratio: 5/6;
+    aspect-ratio: 1;
+    overflow: hidden;
+    background: #000;
 }
 
 .carousel-slide {
+    position: relative;
+    overflow: hidden;
+}
+
+.carousel-slide::after {
+    content: '';
     position: absolute;
+    top: 0;
+    left: 0;
     width: 100%;
     height: 100%;
-    opacity: 0;
-    transition: opacity 0.5s ease;
+    background: radial-gradient(circle at var(--x) var(--y), 
+                rgba(255,255,255,0.1) 0%, 
+                rgba(0,0,0,0.8) 70%);
+    pointer-events: none;
 }
 
 .carousel-slide.active {
@@ -185,30 +214,47 @@
 
 .portrait-info {
     padding: 10px;
-    text-align: center;
+    background: #272727;
+    margin: 15px;
+    border-radius: 5px;
+    backdrop-filter: blur(5px);
+    position: relative;
+    z-index: 1;
 }
 
 .portrait-info h3 {
     font-family: 'ROMUL', serif;
-    color: #354F4E;
-    margin: 10px 0;
-    font-size: 18px;
+    color: #e3d5c6;
+    font-size: 1.4rem;
+    margin: 0 0 15px;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.5);
 }
 
 .price-list {
-    margin: 15px 0;
+    border-top: 1px solid #4a4035;
+    padding-top: 15px;
 }
 
 .price-item {
     display: flex;
     justify-content: space-between;
-    margin: 8px 0;
-    color: #5a4a3a;
+    margin: 10px 0;
+    color: #c5b7a5;
 }
 
 .price {
     font-weight: bold;
     color: #486564;
+}
+
+@keyframes gallery-light {
+    0% { box-shadow: 0 0 30px rgba(227, 213, 198, 0.1); }
+    50% { box-shadow: 0 0 50px rgba(227, 213, 198, 0.3); }
+    100% { box-shadow: 0 0 30px rgba(227, 213, 198, 0.1); }
+}
+
+.portrait-card:nth-child(odd):hover {
+    animation: gallery-light 3s infinite;
 }
 
 /* ================ В корзину =========================================================== */

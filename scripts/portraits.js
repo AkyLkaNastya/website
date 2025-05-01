@@ -52,4 +52,14 @@ document.addEventListener('DOMContentLoaded', function() {
             showSlide(currentSlide);
         });
     });
+
+    document.querySelectorAll('.carousel-slide').forEach(slide => {
+        slide.addEventListener('mousemove', (e) => {
+            const rect = slide.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+            slide.style.setProperty('--x', `${x}px`);
+            slide.style.setProperty('--y', `${y}px`);
+        });
+    });
 });
