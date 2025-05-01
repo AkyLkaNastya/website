@@ -1,0 +1,10 @@
+/* Адаптация */
+@media (max-width: 768px) {
+    .faq-title {
+        font-size: 2rem;
+    }
+    
+    .faq-contact {
+        padding: 30px 20px;
+    }
+}

@@ -1,0 +1,181 @@
+.faq-container {
+    max-width: 1000px;
+    margin: 40px auto;
+    padding: 0 20px;
+}
+
+.faq-title {
+    font-family: 'ROMUL', serif;
+    text-align: center;
+    font-size: 2.5rem;
+    color: #354F4E;
+    margin-bottom: 30px;
+    position: relative;
+}
+
+.faq-title:after {
+    content: "";
+    display: block;
+    width: 150px;
+    height: 3px;
+    background: #d4c4b5;
+    margin: 15px auto;
+}
+
+.faq-intro {
+    text-align: center;
+    margin-bottom: 40px;
+    font-size: 1.1rem;
+    color: #5a5a5a;
+}
+
+/* Стили для вопросов-холстов */
+.faq-item {
+    background: white;
+    border: 12px solid #fff;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    margin-bottom: 30px;
+    position: relative;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    overflow: hidden;
+}
+
+.faq-item:before {
+    content: '';
+    position: absolute;
+    top: -20px;
+    left: -20px;
+    right: -20px;
+    bottom: -20px;
+    border: 2px solid #fff;
+    z-index: -1;
+}
+
+.faq-question {
+    padding: 20px;
+    font-weight: bold;
+    font-size: 1.2rem;
+    color: #354F4E;
+    position: relative;
+    background: #f5f0eb;
+}
+
+.faq-question:after {
+    content: "+";
+    position: absolute;
+    right: 20px;
+    font-size: 1.5rem;
+    transition: transform 0.3s;
+}
+
+.faq-answer {
+    padding: 0 20px;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease, padding 0.3s ease;
+    background: white;
+}
+
+.faq-item.active .faq-question:after {
+    transform: rotate(45deg);
+}
+
+.faq-item.active .faq-answer {
+    max-height: 500px;
+    padding: 20px;
+}
+
+/* Стиль для вопроса про Пикассо */
+.picasso-question {
+    background-size: 100px;
+}
+
+.picasso-answer {
+    position: relative;
+}
+
+.picasso-answer:before {
+    position: absolute;
+    right: 20px;
+    bottom: 10px;
+    font-size: 1.5rem;
+}
+
+/* Стили для раздела "Не нашли ответ" */
+.faq-contact {
+    background: #354F4E;
+    color: white;
+    padding: 40px;
+    text-align: center;
+    margin-top: 60px;
+    position: relative;
+    border: 15px solid white;
+}
+
+.faq-contact:before {
+    content: '';
+    position: absolute;
+    top: -25px;
+    left: -25px;
+    right: -25px;
+    bottom: -25px;
+    border: 2px solid white;
+    z-index: -1;
+}
+
+.contact-title {
+    font-family: 'ROMUL', serif;
+    font-size: 1.8rem;
+    margin-bottom: 20px;
+}
+
+.contact-form {
+    max-width: 500px;
+    margin: 0 auto;
+    display: none;
+}
+
+.contact-form.active {
+    display: block;
+    animation: fadeIn 0.5s;
+}
+
+.envelope-icon {
+    font-size: 3rem;
+    margin-bottom: 20px;
+    cursor: pointer;
+    transition: transform 0.3s;
+    display: inline-block;
+}
+
+.envelope-icon:hover {
+    transform: translateY(-5px);
+}
+
+.call {
+    color:#8aa2a2
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Декоративные элементы */
+.paint-stroke {
+    position: absolute;
+    width: 100%;
+    height: 20px;
+    background: url('images/paint-stroke.png') repeat-x;
+    opacity: 0.7;
+    z-index: -1;
+}
+
+.paint-stroke.top {
+    top: 0;
+}
+
+.paint-stroke.bottom {
+    bottom: 0;
+}
