@@ -22,16 +22,7 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 function loadCartData() {
-    console.log('commentField:', commentField);
-    console.log('placeholder:', placeholder);   
-
-    console.log('=== ДАННЫЕ В LOCALSTORAGE ===');
-    console.log('Данные корзины:', JSON.parse(localStorage.getItem('cartData')));
-    console.log('Портрет:', localStorage.getItem('portraitStyle'));
-    console.log('Холст:', localStorage.getItem('canvasWidth'));
-    console.log('Альтернативный материал:', localStorage.getItem('selectedMaterial'));
-    console.log('=============================');
-
+    // Загрузка альтернативного материала
     const selectedMaterial = localStorage.getItem('selectedMaterial');
     
     if (selectedMaterial) {
@@ -151,9 +142,7 @@ function setupCommentField() {
     const commentField = document.getElementById('commentField');
     const placeholder = document.querySelector('.comment-placeholder');
     
-    // Если плейсхолдер не нужен - удалите эту часть кода
-    if (!placeholder) return;
-    
+    // Инициализация при загрузке
     if (commentField.value.trim() !== '') {
         placeholder.style.opacity = '0';
     }
@@ -281,51 +270,25 @@ function getAlternativeMaterialPrice(material) {
     return prices[material] || 0;
 }
 
-function getPortraitPrice(style, material) {
-    // Базовые цены для каждого стиля (печать)
-    const prices = {
-        'Одной линией': { print: 800, handmade: 800},
-        'Белым карандашом': { print: 2000, handmade: 0},
-        'Портрет питомца': { print: 1500, handmade: 1500},
-        'В образе': { print: 3000, handmade: 3000},
-        'Векторный': { print: 1500, handmade: 1500},
-        'Шарж': { print: 2000, handmade: 2000},
-        'Восстановление ЧБ фото': { print: 2500, handmade: 3000},
-        'Скетч': { print: 800, handmade: 0},
-        'Акцентный': { print: 2000, handmade: 2000},
-        'Неоновый': { print: 200, handmade: 200},
-        'Love is...': { print: 1500, handmade: 0},
-        'Комикс': { print: 1500, handmade: 0},
-        'Стилизованный': { print: 1500, handmade: 1500},
-        'Готовое фото': { print: 150, handmade: 0}
-    };
-    
-    // Определяем тип материала
-    let materialType = 'print';
-    if (material === 'Акрил / Карандаш') materialType = 'handmade';
-    
-    return prices[style]?.[materialType] || 0;
-}
-
 // Вспомогательные функции для расчета цены
 function getPortraitPrice(style) {
     // Здесь должна быть логика определения цены по стилю
     // Пока возвращаем примерные значения
     const prices = {
         'Одной линией': 800,
-        'Белым карандашом': 2000,
-        'Портрет питомца': 1500,
-        'В образе': 3000,
-        'Векторный': 1500,
-        'Шарж': 2000,
-        'Восстановление ЧБ фото': 2500,
         'Скетч': 800,
-        'Акцентный': 2000,
-        'Неоновый': 200,
+        'Векторный': 1500,
         'Love is...': 1500,
         'Комикс': 1500,
         'Стилизованный': 1500,
-        'Готовое фото': 150
+        'Портрет питомца': 1500,
+        'Белым карандашом': 2000,
+        'Акцентный': 2000,
+        'Шарж': 2000,
+        'Портрет': 2000,
+        'Восстановление ЧБ фото': 2500,
+        'Неоновый': 3000,
+        'В образе': 3000,
     };
     
     return prices[style] || 0;
@@ -334,19 +297,6 @@ function getPortraitPrice(style) {
 function getCanvasPrice(width) {
     // Примерная логика расчета цены холста по ширине
     return width * 10;
-}
-
-function getAlternativeMaterialPrice(material) {
-    // Примерные цены для альтернативных материалов
-    const prices = {
-        'jeton': 500,
-        'tshirt': 1000,
-        'banner': 1500,
-        'sticker': 300,
-        'sign': 800
-    };
-    
-    return prices[material] || 0;
 }
 
 // Сохранение данных при изменении
