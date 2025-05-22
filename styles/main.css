@@ -159,22 +159,19 @@ nav ul li:hover a::before {
 
 /* ================ Выпадающее меню =========================================================== */
 
-.dropdown {
-    position: relative;
-}
-
-.submenu {
+.dropdown .submenu {
     display: none;
     position: absolute;
     top: calc(100% + 15px);
     left: 50%;
     transform: translateX(-50%);
-	padding-top: 10px;
+    padding-top: 10px;
     padding-bottom: 10px;
     background: #d4c4b5;
     border: 12px solid #FFFFFF;
     z-index: 3000;
     text-align: center;
+    animation: none !important;
 }
 
 .submenu:before {
@@ -190,8 +187,11 @@ nav ul li:hover a::before {
 
 .dropdown:hover .submenu,
 .submenu:hover {
+    display: none;
+}
+
+.dropdown.active .submenu {
     display: block;
-    animation: none;
 }
 
 .submenu li {

@@ -13,26 +13,59 @@ window.addEventListener('scroll', function() {
 
 
 document.addEventListener('DOMContentLoaded', function() {
-    // Инициализация десктопных слайдеров
+    // Инициализация слайдеров
     setupSlider('widthSlider', 'widthValue');
     setupSlider('heightSlider', 'heightValue');
     setupSlider('angleSlider', 'angleValue');
-    
-    // Инициализация мобильных слайдеров
     setupSlider('mobileWidthSlider', 'mobileWidthValue');
     setupSlider('mobileHeightSlider', 'mobileHeightValue');
     setupSlider('mobileAngleSlider', 'mobileAngleValue');
-    
-    // Инициализация при загрузке (мобильная версия)
+
+    // Обработчик кнопки "В корзину"
+    document.querySelector('.add-to-cart').addEventListener('click', function() {
+        // Получаем значения с десктопных или мобильных слайдеров
+        const width = window.innerWidth > 960 ? 
+            document.getElementById('widthSlider').value : 
+            document.getElementById('mobileWidthSlider').value;
+        
+        const height = window.innerWidth > 960 ? 
+            document.getElementById('heightSlider').value : 
+            document.getElementById('mobileHeightSlider').value;
+        
+        const corners = window.innerWidth > 960 ? 
+            document.getElementById('angleSlider').value : 
+            document.getElementById('mobileAngleSlider').value;
+
+        // Сохраняем параметры холста в localStorage
+        localStorage.setItem('canvasWidth', width);
+        localStorage.setItem('canvasHeight', height);
+        localStorage.setItem('canvasCorners', corners);
+        
+        // Удаляем выбранный альтернативный материал (если был)
+        localStorage.removeItem('selectedMaterial');
+        
+        // Перенаправляем в корзину
+        window.location.href = 'cart.html';
+    });
+
+    // Показываем блок при скролле (мобильная версия)
     if (window.innerWidth <= 960) {
         document.getElementById('mobileScrollBlock').style.marginTop = 
             window.innerHeight - document.querySelector('header').offsetHeight + 'px';
+        
+        window.addEventListener('scroll', function() {
+            const scrollBlock = document.getElementById('mobileScrollBlock');
+            const rect = scrollBlock.getBoundingClientRect();
+            if (rect.top < window.innerHeight * 0.8) {
+                scrollBlock.classList.add('visible');
+            }
+        });
     }
 });
 
 // ================ Ползунки ===========================================================
 
-// Универсальная функция для настройки слайдеров
+// Функция для настройки слайдеров
 function setupSlider(sliderId, valueId) {
     const slider = document.getElementById(sliderId);
     const valueDisplay = document.getElementById(valueId);
@@ -41,7 +74,6 @@ function setupSlider(sliderId, valueId) {
         // Обновляем значение сразу
         valueDisplay.textContent = slider.value;
         
-        // Обработчик для всех событий изменения
         const updateHandler = () => {
             valueDisplay.textContent = slider.value;
         };
@@ -49,7 +81,6 @@ function setupSlider(sliderId, valueId) {
         slider.addEventListener('input', updateHandler);
         slider.addEventListener('change', updateHandler);
         
-        // Для touch-устройств
         slider.addEventListener('touchstart', function() {
             this.addEventListener('touchmove', updateHandler);
         });

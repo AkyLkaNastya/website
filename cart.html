@@ -93,7 +93,13 @@
                     <h3>Портрет</h3>
                     <div class="item-details">
                         <p><strong>Стиль:</strong> <span id="portraitStyle">Не выбран</span></p>
-                        <p><strong>Материал:</strong> <span id="portraitMaterial">Не выбран</span></p>
+                        <div class="material-selection">
+                            <label for="materialSelect"><strong>Материал:</strong></label>
+                            <select id="materialSelect" class="material-select">
+                                <option value="print">Печать</option>
+                                <option value="acrylic_or_pencil">Акрил или карандаш</option>
+                            </select>
+                        </div>
                     </div>
                 </div>
                 
@@ -111,19 +117,24 @@
                     <h3>Или выберите другой материал:</h3>
                     <div class="material-options">
                         <label class="material-option">
-                            <input type="checkbox" name="alternativeMaterial" value="jeton"> Жетон
+                            <input type="checkbox" name="alternativeMaterial" value="jeton"> 
+                            Жетоны
                         </label>
                         <label class="material-option">
-                            <input type="checkbox" name="alternativeMaterial" value="tshirt"> Футболка
+                            <input type="checkbox" name="alternativeMaterial" value="tshirt"> 
+                            Футболки
                         </label>
                         <label class="material-option">
-                            <input type="checkbox" name="alternativeMaterial" value="banner"> Баннер
+                            <input type="checkbox" name="alternativeMaterial" value="banner"> 
+                            Баннеры
                         </label>
                         <label class="material-option">
-                            <input type="checkbox" name="alternativeMaterial" value="sticker"> Наклейки
+                            <input type="checkbox" name="alternativeMaterial" value="sticker"> 
+                            Наклейки
                         </label>
                         <label class="material-option">
-                            <input type="checkbox" name="alternativeMaterial" value="sign"> Табличка
+                            <input type="checkbox" name="alternativeMaterial" value="sign"> 
+                            Таблички на ПВХ
                         </label>
                     </div>
                 </div>
@@ -214,8 +225,35 @@
             <!-- Итоговая стоимость -->
             <div class="cart-total">
                 <h2>Итого:</h2>
-                <div class="total-price" id="totalPrice">0 р</div>
+                <div class="total-price" id="totalPrice">0 ₽</div>
+                <button class="save-button" id="saveCart">Сохранить</button>
                 <button class="checkout-button">Оформить заказ</button>
+            </div>
+        </div>
+
+        <!-- Модальное окно оформления заказа -->
+        <div class="order-modal" id="orderModal">
+            <div class="modal-content">
+                <button class="close-modal">&times;</button>
+                <h3>Оформление заказа</h3>
+                <form id="orderForm" enctype="multipart/form-data">
+                    <div class="form-group">
+                        <label for="clientName">Ваше имя:</label>
+                        <input type="text" id="clientName" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="clientPhone">Номер телефона:</label>
+                        <input type="tel" id="clientPhone" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="clientEmail">Email:</label>
+                        <input type="email" id="clientEmail" required>
+                    </div>
+                    <div class="form-notice">
+                        Как только мы увидим Ваш заказ, мы сразу позвоним и напишем!
+                    </div>
+                    <button type="submit" class="submit-order">Заказать</button>
+                </form>
             </div>
         </div>
     </main>

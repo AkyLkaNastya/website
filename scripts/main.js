@@ -22,12 +22,47 @@ document.addEventListener('DOMContentLoaded', function() {
 
 // ========== Выпадающее меню =======================================================================
 
-document.querySelectorAll('.dropdown > a').forEach(item => {
-    item.addEventListener('click', (e) => {
-        if (window.innerWidth <= 960) {
+document.addEventListener('DOMContentLoaded', function() {
+    const dropdown = document.querySelector('.dropdown');
+    const dropdownLink = dropdown.querySelector('a');
+    const submenu = dropdown.querySelector('.submenu');
+    
+    // Закрываем подменю при клике вне его области
+    document.addEventListener('click', function(event) {
+        if (!dropdown.contains(event.target)) {
+            submenu.style.display = 'none';
+            dropdown.classList.remove('active');
+        }
+    });
+    
+    // Обработчик клика по пункту "ОСНОВА"
+    dropdownLink.addEventListener('click', function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        
+        if (submenu.style.display === 'block') {
+            submenu.style.display = 'none';
+            dropdown.classList.remove('active');
+        } else {
+            submenu.style.display = 'block';
+            dropdown.classList.add('active');
+        }
+    });
+    
+    // Для мобильной версии оставляем стандартное поведение
+    if (window.innerWidth <= 960) {
+        dropdownLink.addEventListener('click', (e) => {
             e.preventDefault();
-            e.stopPropagation(); // Блокируем всплытие события
-            item.parentElement.classList.toggle('active');
+            e.stopPropagation();
+            dropdown.classList.toggle('active');
+        });
+    }
+    
+    // Обработчик изменения размера окна
+    window.addEventListener('resize', function() {
+        if (window.innerWidth > 960) {
+            submenu.style.display = 'none';
+            dropdown.classList.remove('active');
         }
     });
 });

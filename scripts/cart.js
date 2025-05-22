@@ -22,19 +22,30 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 function loadCartData() {
-    // Загрузка данных о портрете
-    const portraitStyle = localStorage.getItem('portraitStyle');
-    const portraitMaterial = localStorage.getItem('portraitMaterial');
+    console.log('commentField:', commentField);
+    console.log('placeholder:', placeholder);   
+
+    console.log('=== ДАННЫЕ В LOCALSTORAGE ===');
+    console.log('Данные корзины:', JSON.parse(localStorage.getItem('cartData')));
+    console.log('Портрет:', localStorage.getItem('portraitStyle'));
+    console.log('Холст:', localStorage.getItem('canvasWidth'));
+    console.log('Альтернативный материал:', localStorage.getItem('selectedMaterial'));
+    console.log('=============================');
+
+    const selectedMaterial = localStorage.getItem('selectedMaterial');
     
-    if (portraitStyle) {
-        document.getElementById('portraitStyle').textContent = portraitStyle;
+    if (selectedMaterial) {
+        const materialOptions = document.querySelectorAll('.material-option');
+        materialOptions.forEach(option => {
+            const labelText = option.textContent.trim().replace(/\s+/g, ' ');
+            if (labelText === selectedMaterial) {
+                option.querySelector('input').checked = true;
+                document.getElementById('canvasItem').style.opacity = '0.5';
+            }
+        });
     }
-    
-    if (portraitMaterial) {
-        document.getElementById('portraitMaterial').textContent = portraitMaterial;
-    }
-    
-    // Загрузка данных о холсте
+
+    // Загрузка параметров холста
     const canvasWidth = localStorage.getItem('canvasWidth');
     const canvasHeight = localStorage.getItem('canvasHeight');
     const canvasCorners = localStorage.getItem('canvasCorners');
@@ -44,9 +55,34 @@ function loadCartData() {
     }
     
     if (canvasCorners) {
-        document.getElementById('canvasCorners').textContent = canvasCorners;
+        document.getElementById('canvasCorners').textContent = `${canvasCorners} углов`;
+    }
+
+    // Загрузка стиля портрета
+    const portraitStyle = localStorage.getItem('portraitStyle');
+    if (portraitStyle) {
+        document.getElementById('portraitStyle').textContent = portraitStyle;
+    }
+    
+    // Загрузка выбранного материала (если есть)
+    const savedMaterial = localStorage.getItem('portraitMaterial');
+    if (savedMaterial) {
+        const select = document.getElementById('materialSelect');
+        for (let i = 0; i < select.options.length; i++) {
+            if (select.options[i].text === savedMaterial) {
+                select.selectedIndex = i;
+                break;
+            }
+        }
     }
 }
+
+// Обработчик изменения материала
+document.getElementById('materialSelect')?.addEventListener('change', function() {
+    const selectedMaterial = this.options[this.selectedIndex].text;
+    localStorage.setItem('portraitMaterial', selectedMaterial);
+    updateTotalPrice();
+});
 
 // Загрузка фото
 function setupPhotoUpload() {
@@ -115,7 +151,9 @@ function setupCommentField() {
     const commentField = document.getElementById('commentField');
     const placeholder = document.querySelector('.comment-placeholder');
     
-    // Инициализация при загрузке
+    // Если плейсхолдер не нужен - удалите эту часть кода
+    if (!placeholder) return;
+    
     if (commentField.value.trim() !== '') {
         placeholder.style.opacity = '0';
     }
@@ -192,17 +230,18 @@ function setupGiftWrap() {
 }
 
 function updateTotalPrice() {
-    // Здесь будет логика расчета стоимости
-    // Пока просто пример
     let total = 0;
     
-    // Добавляем стоимость портрета (пример)
+    // Добавляем стоимость портрета
     const portraitStyle = localStorage.getItem('portraitStyle');
+    const materialSelect = document.getElementById('materialSelect');
+    const portraitMaterial = materialSelect?.options[materialSelect.selectedIndex]?.text;
+    
     if (portraitStyle) {
-        total += getPortraitPrice(portraitStyle);
+        total += getPortraitPrice(portraitStyle, portraitMaterial);
     }
     
-    // Добавляем стоимость холста (если выбран)
+     // Добавляем стоимость холста или альтернативного материала
     const alternativeMaterial = document.querySelector('input[name="alternativeMaterial"]:checked');
     if (!alternativeMaterial) {
         const canvasWidth = localStorage.getItem('canvasWidth');
@@ -210,18 +249,62 @@ function updateTotalPrice() {
             total += getCanvasPrice(canvasWidth);
         }
     } else {
-        // Добавляем стоимость альтернативного материала
         total += getAlternativeMaterialPrice(alternativeMaterial.value);
     }
     
     // Добавляем стоимость подарочной упаковки
-    const giftWrap = document.getElementById('giftWrap');
-    if (giftWrap.checked) {
-        total += 500;
+    const giftWrapPrice = document.getElementById('giftWrapPrice').textContent;
+    if (giftWrapPrice !== 'Бесплатно') {
+        total += parseInt(giftWrapPrice);
     }
     
     // Обновляем отображение
-    document.getElementById('totalPrice').textContent = `${total} р`;
+    document.getElementById('totalPrice').textContent = `${total} ₽`;
+}
+
+function getCanvasPrice(width) {
+    // Пример расчета цены: базовая стоимость + цена за см²
+    const basePrice = 500;
+    const pricePerCm = 10;
+    return basePrice + (width * pricePerCm);
+}
+
+function getAlternativeMaterialPrice(material) {
+    const prices = {
+        'jeton': 400,
+        'tshirt': 700,
+        'banner': 350,
+        'sticker': 400,
+        'sign': 600
+    };
+    
+    return prices[material] || 0;
+}
+
+function getPortraitPrice(style, material) {
+    // Базовые цены для каждого стиля (печать)
+    const prices = {
+        'Одной линией': { print: 800, handmade: 800},
+        'Белым карандашом': { print: 2000, handmade: 0},
+        'Портрет питомца': { print: 1500, handmade: 1500},
+        'В образе': { print: 3000, handmade: 3000},
+        'Векторный': { print: 1500, handmade: 1500},
+        'Шарж': { print: 2000, handmade: 2000},
+        'Восстановление ЧБ фото': { print: 2500, handmade: 3000},
+        'Скетч': { print: 800, handmade: 0},
+        'Акцентный': { print: 2000, handmade: 2000},
+        'Неоновый': { print: 200, handmade: 200},
+        'Love is...': { print: 1500, handmade: 0},
+        'Комикс': { print: 1500, handmade: 0},
+        'Стилизованный': { print: 1500, handmade: 1500},
+        'Готовое фото': { print: 150, handmade: 0}
+    };
+    
+    // Определяем тип материала
+    let materialType = 'print';
+    if (material === 'Акрил / Карандаш') materialType = 'handmade';
+    
+    return prices[style]?.[materialType] || 0;
 }
 
 // Вспомогательные функции для расчета цены
@@ -264,4 +347,150 @@ function getAlternativeMaterialPrice(material) {
     };
     
     return prices[material] || 0;
+}
+
+// Сохранение данных при изменении
+document.getElementById('peopleCount').addEventListener('input', function() {
+    localStorage.setItem('peopleCount', this.value);
+});
+
+document.getElementById('hasPet').addEventListener('change', function() {
+    localStorage.setItem('hasPet', this.checked);
+});
+
+document.getElementById('commentField').addEventListener('input', function() {
+    localStorage.setItem('comment', this.value);
+});
+
+document.querySelectorAll('input[name="alternativeMaterial"]').forEach(input => {
+    input.addEventListener('change', function() {
+        localStorage.setItem('selectedMaterial', this.value);
+    });
+});
+
+document.getElementById('saveCart').addEventListener('click', function() {
+    const cartData = {
+        peopleCount: document.getElementById('peopleCount').value,
+        hasPet: document.getElementById('hasPet').checked,
+        comment: document.getElementById('commentField').value,
+        wrapType: document.getElementById('giftWrapPrice').textContent
+    };
+    localStorage.setItem('cartData', JSON.stringify(cartData));
+    alert('Данные сохранены!');
+});
+
+// ==================== Отправка заказа ====================================
+
+document.querySelector('.checkout-button').addEventListener('click', function() {
+    document.getElementById('orderModal').style.display = 'flex';
+});
+
+// Закрытие модального окна
+document.querySelector('.order-modal .close-modal').addEventListener('click', function() {
+    document.getElementById('orderModal').style.display = 'none';
+});
+
+// Закрытие при клике вне окна
+document.getElementById('orderModal').addEventListener('click', function(e) {
+    if (e.target === this) {
+        this.style.display = 'none';
+    }
+});
+
+// Отправка формы
+document.getElementById('orderForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    
+    const name = document.getElementById('clientName').value;
+    const phone = document.getElementById('clientPhone').value;
+    const email = document.getElementById('clientEmail').value;
+    
+    // Формируем данные заказа
+    const orderData = {
+        client: { name, phone, email },
+        portrait: {
+            style: localStorage.getItem('portraitStyle'),
+            material: document.getElementById('materialSelect').value
+        },
+        canvas: {
+            width: localStorage.getItem('canvasWidth'),
+            height: localStorage.getItem('canvasHeight'),
+            corners: localStorage.getItem('canvasCorners')
+        },
+        alternativeMaterial: document.querySelector('input[name="alternativeMaterial"]:checked')?.value,
+        totalPrice: document.getElementById('totalPrice').textContent
+    };
+    
+    // Отправка на почту (используем Formspree или аналогичный сервис)
+    sendOrderEmail(orderData);
+});
+
+function sendOrderEmail(orderData) {
+    const formData = new FormData();
+    const photoFile = document.getElementById('photoInput').files[0];
+    
+    // Добавляем текстовые данные
+    formData.append('_subject', `Новый заказ от ${orderData.client.name}`);
+    formData.append('name', orderData.client.name);
+    formData.append('phone', orderData.client.phone);
+    formData.append('email', orderData.client.email);
+    formData.append('message', formatOrderMessage(orderData));
+    
+    // Добавляем файл фото, если есть
+    if (photoFile) {
+        formData.append('photo', photoFile);
+    }
+    
+    // Отправка через Formspree
+    fetch('https://formspree.io/f/meogwkvz', {
+        method: 'POST',
+        body: formData,
+    })
+    .then(response => {
+        if (response.ok) {
+            alert('Заказ успешно отправлен! Мы свяжемся с вами в ближайшее время.');
+            document.getElementById('orderModal').style.display = 'none';
+        } else {
+            throw new Error('Ошибка отправки заказа');
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        alert('Произошла ошибка при отправке заказа. Пожалуйста, попробуйте еще раз или свяжитесь с нами по телефону.');
+    });
+}
+
+function formatOrderMessage(orderData) {
+    const savedData = JSON.parse(localStorage.getItem('cartData'));
+    const photoFile = document.getElementById('photoInput').files[0];
+    
+    let message = `🎨 НОВЫЙ ЗАКАЗ 🎨\n\n`;
+    message += `👤 Клиент:\n`;
+    message += `- Имя: ${orderData.client.name}\n`;
+    message += `- Телефон: ${orderData.client.phone}\n`;
+    message += `- Email: ${orderData.client.email}\n\n`;
+    
+    message += `🖼️ Портрет:\n`;
+    message += `- Стиль: ${orderData.portrait.style || 'Не выбран'}\n`;
+    message += `- Материал: ${orderData.portrait.material || 'Не выбран'}\n`;
+    message += `- Людей: ${savedData.peopleCount || 1}\n`;
+    message += `- Питомец: ${savedData.hasPet ? 'Да' : 'Нет'}\n\n`;
+    
+    if (orderData.canvas.width) {
+        message += `🖌️ Холст:\n`;
+        message += `- Размер: ${orderData.canvas.width} × ${orderData.canvas.height} см\n`;
+        message += `- Углы: ${orderData.canvas.corners}\n\n`;
+    }
+    
+    if (orderData.alternativeMaterial) {
+        message += `📌 Альтернативный материал: ${orderData.alternativeMaterial}\n\n`;
+    }
+    
+    message += `💌 Пожелания:\n${savedData.comment || 'Не указано'}\n\n`;
+    message += `🎁 Обёртка: ${savedData.wrapType || 'Стандартная'}\n\n`;
+    message += `💰 Стоимость: ${orderData.totalPrice}\n\n`;
+    message += `📅 Дата: ${new Date().toLocaleString('ru-RU')}\n\n`;
+    message += `📸 Фото: ${photoFile ? photoFile.name : 'Не загружено'}`;
+    
+    return message;
 }
