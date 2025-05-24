@@ -102,7 +102,7 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    gap: 35px;
+    gap: 25px;
     padding: 40px 14px;
     box-sizing: border-box;
     z-index: 10;
@@ -179,11 +179,29 @@ input[type="range"].win10-thumb {
     border: none;
     font-size: 16px;
     cursor: pointer;
-    margin-top: 20px;
     transition: all 0.3s ease;
 }
 
 .add-to-cart:hover {
     background: #486564;
     transform: translateY(-2px);
+}
+
+/* ================ Блок цены =========================================================== */
+.price-block {
+    width: 100%;
+    text-align: center;
+    border-top: 1px solid #e1e1e1;
+    border-bottom: 1px solid #e1e1e1;
+}
+
+.price-label {
+    font-size: 16px;
+    color: #3a3a3a;
+}
+
+.price-value {
+    font-size: 22px;
+    font-weight: bold;
+    color: #354F4E;
 }

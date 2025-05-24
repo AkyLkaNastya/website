@@ -220,42 +220,90 @@ function setupGiftWrap() {
 
 function updateTotalPrice() {
     let total = 0;
+    const peopleCount = parseInt(document.getElementById('peopleCount').value) || 1;
+    const hasPet = document.getElementById('hasPet').checked ? 1 : 0;
+
+    // 1. Получаем стоимость основы
+    let basePrice = 0;
+    const altMaterial = document.querySelector('input[name="alternativeMaterial"]:checked');
     
-    // Добавляем стоимость портрета
-    const portraitStyle = localStorage.getItem('portraitStyle');
-    const materialSelect = document.getElementById('materialSelect');
-    const portraitMaterial = materialSelect?.options[materialSelect.selectedIndex]?.text;
-    
-    if (portraitStyle) {
-        total += getPortraitPrice(portraitStyle, portraitMaterial);
-    }
-    
-     // Добавляем стоимость холста или альтернативного материала
-    const alternativeMaterial = document.querySelector('input[name="alternativeMaterial"]:checked');
-    if (!alternativeMaterial) {
-        const canvasWidth = localStorage.getItem('canvasWidth');
-        if (canvasWidth) {
-            total += getCanvasPrice(canvasWidth);
-        }
+    if (!altMaterial) {
+        // Берем сохраненную стоимость холста
+        basePrice = parseInt(localStorage.getItem('canvasPrice')) || 0;
     } else {
-        total += getAlternativeMaterialPrice(alternativeMaterial.value);
+        // Альтернативные материалы
+        basePrice = getAlternativeMaterialPrice(altMaterial.value);
     }
+
+    // 2. Расчет стоимости портрета
+    const portraitStyle = localStorage.getItem('portraitStyle');
+    const materialType = document.getElementById('materialSelect').value;
+    const portraitPrice = getPortraitPrice(portraitStyle, materialType);
+
+    // 3. Множитель количества существ 
+    const entityCount = peopleCount + hasPet;
+    let multiplier = 1;
+    if (entityCount >= 4 && entityCount <= 6) multiplier = 1.6;
+    if (entityCount >= 7) multiplier = 2.2;
+
+    // 4. Обертка
+    const wrapPrice = parsePrice(document.getElementById('giftWrapPrice').textContent);
+
+    // Итог: (Портрет + Основа) * Множитель + Обертка
+    total = (portraitPrice * multiplier) + basePrice + wrapPrice;
+    result = Math.ceil(total / 100) * 100;
+
+    // Форматируем итоговую сумму с пробелом между тысячами
+    const formattedTotal = Math.ceil(result)
+        .toLocaleString('ru-RU', {useGrouping: true});
     
-    // Добавляем стоимость подарочной упаковки
-    const giftWrapPrice = document.getElementById('giftWrapPrice').textContent;
-    if (giftWrapPrice !== 'Бесплатно') {
-        total += parseInt(giftWrapPrice);
-    }
-    
-    // Обновляем отображение
-    document.getElementById('totalPrice').textContent = `${total} ₽`;
+    document.getElementById('totalPrice').textContent = `${formattedTotal} ₽`;
 }
 
-function getCanvasPrice(width) {
-    // Пример расчета цены: базовая стоимость + цена за см²
-    const basePrice = 500;
-    const pricePerCm = 10;
-    return basePrice + (width * pricePerCm);
+// Вспомогательные функции
+function parsePrice(priceString) {
+    return parseInt(priceString.replace(/[^\d]/g, '')) || 0;
+}
+
+function getPortraitPrice(style, material) {
+    // Базовые стоимости стилей
+    const basePrices = {
+        'Одной линией': 800,
+        'Скетч': 800,
+        'Портрет питомца': 1500,
+        'Векторный': 1500,
+        'Love is...': 1500,
+        'Комикс': 1500,
+        'Стилизованный': 1500,
+        'Белым карандашом': 2000,
+        'Акцентный': 2000,
+        'Шарж': 2000,
+        'Восстановление ЧБ фото': 2500,
+        'Неоновый': 3000,
+        'В образе': 3000
+    };
+
+    const basePrice = basePrices[style] || 0;
+    
+    // Если выбран "Акрил или карандаш" и не выбран альтернативный материал
+    const altMaterial = document.querySelector('input[name="alternativeMaterial"]:checked');
+    if (material === 'acrylic_or_pencil' && !altMaterial) {
+        // Получаем размеры холста
+        const width = parseInt(localStorage.getItem('canvasWidth')) || 30;
+        const height = parseInt(localStorage.getItem('canvasHeight')) || 30;
+        
+        const coefficient = Math.round((width * height / 900) * 100) / 100;
+        const multiplier = coefficient === 1 ? 1 : 0.8;
+        
+        // Рассчитываем стоимость с учетом коэффициента
+        const calculatedPrice = basePrice * coefficient * multiplier;
+        
+        // Округляем до сотен вверх
+        return Math.ceil(calculatedPrice / 100) * 100;
+    }
+    
+    // Для печати или альтернативных материалов возвращаем базовую стоимость
+    return basePrice;
 }
 
 function getAlternativeMaterialPrice(material) {
@@ -266,32 +314,14 @@ function getAlternativeMaterialPrice(material) {
         'sticker': 400,
         'sign': 600
     };
-    
     return prices[material] || 0;
 }
 
-// Вспомогательные функции для расчета цены
-function getPortraitPrice(style) {
-    // Здесь должна быть логика определения цены по стилю
-    // Пока возвращаем примерные значения
-    const prices = {
-        'Одной линией': 800,
-        'Скетч': 800,
-        'Векторный': 1500,
-        'Love is...': 1500,
-        'Комикс': 1500,
-        'Стилизованный': 1500,
-        'Портрет питомца': 1500,
-        'Белым карандашом': 2000,
-        'Акцентный': 2000,
-        'Шарж': 2000,
-        'Портрет': 2000,
-        'Восстановление ЧБ фото': 2500,
-        'Неоновый': 3000,
-        'В образе': 3000,
-    };
-    
-    return prices[style] || 0;
+function getCanvasPrice(width) {
+    // Пример расчета цены: базовая стоимость + цена за см²
+    const basePrice = 500;
+    const pricePerCm = 10;
+    return basePrice + (width * pricePerCm);
 }
 
 function getCanvasPrice(width) {

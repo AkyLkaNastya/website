@@ -21,32 +21,17 @@ document.addEventListener('DOMContentLoaded', function() {
     setupSlider('mobileHeightSlider', 'mobileHeightValue');
     setupSlider('mobileAngleSlider', 'mobileAngleValue');
 
-    // Обработчик кнопки "В корзину"
-    document.querySelector('.add-to-cart').addEventListener('click', function() {
-        // Получаем значения с десктопных или мобильных слайдеров
-        const width = window.innerWidth > 960 ? 
-            document.getElementById('widthSlider').value : 
-            document.getElementById('mobileWidthSlider').value;
-        
-        const height = window.innerWidth > 960 ? 
-            document.getElementById('heightSlider').value : 
-            document.getElementById('mobileHeightSlider').value;
-        
-        const corners = window.innerWidth > 960 ? 
-            document.getElementById('angleSlider').value : 
-            document.getElementById('mobileAngleSlider').value;
+    // Инициализируем отображение цены
+    updatePriceDisplay();
 
-        // Сохраняем параметры холста в localStorage
-        localStorage.setItem('canvasWidth', width);
-        localStorage.setItem('canvasHeight', height);
-        localStorage.setItem('canvasCorners', corners);
-        
-        // Удаляем выбранный альтернативный материал (если был)
-        localStorage.removeItem('selectedMaterial');
-        
-        // Перенаправляем в корзину
-        window.location.href = 'cart.html';
-    });
+    // Обработчик для десктопной кнопки
+    document.querySelector('.add-to-cart').addEventListener('click', addToCartHandler);
+    
+    // Обработчик для мобильной кнопки
+    const mobileAddToCartBtn = document.querySelector('.mobile-controls .add-to-cart');
+    if (mobileAddToCartBtn) {
+        mobileAddToCartBtn.addEventListener('click', addToCartHandler);
+    }
 
     // Показываем блок при скролле (мобильная версия)
     if (window.innerWidth <= 960) {
@@ -63,6 +48,37 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 });
 
+// Выносим общую логику в отдельную функцию
+function addToCartHandler() {
+    // Получаем значения с десктопных или мобильных слайдеров
+    const width = window.innerWidth > 960 ? 
+        document.getElementById('widthSlider').value : 
+        document.getElementById('mobileWidthSlider').value;
+    
+    const height = window.innerWidth > 960 ? 
+        document.getElementById('heightSlider').value : 
+        document.getElementById('mobileHeightSlider').value;
+    
+    const corners = window.innerWidth > 960 ? 
+        document.getElementById('angleSlider').value : 
+        document.getElementById('mobileAngleSlider').value;
+
+    // Сохраняем параметры холста в localStorage
+    localStorage.setItem('canvasWidth', width);
+    localStorage.setItem('canvasHeight', height);
+    localStorage.setItem('canvasCorners', corners);
+    
+    // Удаляем выбранный альтернативный материал (если был)
+    localStorage.removeItem('selectedMaterial');
+
+    // Рассчитываем и сохраняем стоимость холста
+    const price = calculateCanvasPrice(width, height, corners);
+    localStorage.setItem('canvasPrice', price);
+    
+    // Перенаправляем в корзину
+    window.location.href = 'cart.html';
+}
+
 // ================ Ползунки ===========================================================
 
 // Функция для настройки слайдеров
@@ -71,11 +87,11 @@ function setupSlider(sliderId, valueId) {
     const valueDisplay = document.getElementById(valueId);
     
     if (slider && valueDisplay) {
-        // Обновляем значение сразу
         valueDisplay.textContent = slider.value;
         
         const updateHandler = () => {
             valueDisplay.textContent = slider.value;
+            updatePriceDisplay();
         };
         
         slider.addEventListener('input', updateHandler);
@@ -88,15 +104,12 @@ function setupSlider(sliderId, valueId) {
         slider.addEventListener('touchend', function() {
             this.removeEventListener('touchmove', updateHandler);
         });
+
+        // Добавьте анимацию здесь
+        slider.addEventListener('input', function() {
+            animateValue(valueDisplay, this.value);
+        });
     }
-}
-
-// Остальной код (анимации, scroll и т.д.) остается без изменений
-
-function updateValues() {
-    gsap.to(widthValue, {textContent: widthSlider.value, duration: 0.3});
-    gsap.to(heightValue, {textContent: heightSlider.value, duration: 0.3});
-    gsap.to(angleValue, {textContent: angleSlider.value, duration: 0.3});
 }
 
 // Анимация чисел при изменении
@@ -111,7 +124,53 @@ function animateValue(element, newValue) {
     });
 }
 
-// Использование:
-slider.addEventListener('input', function() {
-    animateValue(valueDisplay, this.value);
-});
+// Функция для расчета стоимости холста
+function calculateCanvasPrice(width, height, corners) {
+    // Преобразуем параметры в числа
+    width = parseInt(width);
+    height = parseInt(height);
+    corners = parseInt(corners);
+    
+    // Расчет стоимости печати холста
+    const printCost = Math.ceil((width + 5) * (height + 5) * 0.0001 * 1000);
+    
+    // Расчет стоимости брусьев (рамы)
+    const frameCost = Math.ceil((width * 2 + height * 2) / 200) * 100;
+    
+    // Базовая стоимость (печать + рама) с наценкой
+    const baseCost = Math.ceil((printCost + frameCost) * 2);
+    
+    // Учет дополнительных углов (4 угла - база, каждый дополнительный +20%)
+    const priceBeforeRounding = baseCost * (1 + (corners - 4) * 0.2);
+    
+    // Округляем вверх до сотен
+    const finalPrice = Math.ceil(priceBeforeRounding / 100) * 100;
+    
+    return finalPrice;
+}
+
+function updatePriceDisplay() {
+    const width = window.innerWidth > 960 ? 
+        document.getElementById('widthSlider').value : 
+        document.getElementById('mobileWidthSlider').value;
+    
+    const height = window.innerWidth > 960 ? 
+        document.getElementById('heightSlider').value : 
+        document.getElementById('mobileHeightSlider').value;
+    
+    const corners = window.innerWidth > 960 ? 
+        document.getElementById('angleSlider').value : 
+        document.getElementById('mobileAngleSlider').value;
+    
+    const price = calculateCanvasPrice(width, height, corners);
+    const formattedPrice = new Intl.NumberFormat('ru-RU').format(price);
+    
+    // Дебаг-логи
+    console.log('Current price:', { width, height, corners, price });
+    
+    // Обновляем оба блока
+    document.getElementById('priceValue').textContent = formattedPrice + ' ₽';
+    document.getElementById('mobilePriceValue').textContent = formattedPrice + ' ₽';
+
+    localStorage.setItem('canvasPrice', price);
+}

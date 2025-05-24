@@ -106,7 +106,7 @@
         bottom: 0;
         left: 0;
         width: 100%;
-        height: 315px;
+        height: 345px;
         background: #FFFFFF;
         z-index: -1;
     }
@@ -218,6 +218,21 @@
         font-size: 16px;
         height: 40px;
         margin-top: 0;
+    }
+
+    /* ================ Стоимость =========================================================== */
+
+    .price-block {
+        margin-top: 15px;
+        margin-bottom: 15px;
+    }
+    
+    .price-label {
+        font-size: 14px;
+    }
+    
+    .price-value {
+        font-size: 18px;
     }
 }
 
