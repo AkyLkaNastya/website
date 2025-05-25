@@ -241,6 +241,36 @@
     align-items: center;
 }
 
+/* Временно */
+
+.disabled-upload {
+    background-color: #f5f5f5;
+    border: 2px dashed #ccc;
+    cursor: not-allowed;
+    text-align: center;
+    padding: 20px;
+}
+
+.disabled-upload .upload-icon {
+    font-size: 24px;
+    color: #ff9800;
+    margin-bottom: 10px;
+}
+
+.disabled-upload .upload-text {
+    color: #666;
+    font-size: 14px;
+    line-height: 1.4;
+}
+
+.notice-box {
+    background-color: #fff8e1;
+    border-left: 4px solid #ffc107;
+    padding: 12px;
+    margin-bottom: 20px;
+    font-size: 14px;
+}
+
 /* ================ Детали портрета =========================================================== */
 
 .portrait-details {

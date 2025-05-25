@@ -77,32 +77,48 @@ document.getElementById('materialSelect')?.addEventListener('change', function()
 
 // Загрузка фото
 function setupPhotoUpload() {
-    const photoInput = document.getElementById('photoInput');
-    const uploadBox = document.getElementById('uploadBox');
-    const uploadPreview = document.getElementById('uploadPreview');
-    const previewImage = document.getElementById('previewImage');
-    const removePhoto = document.getElementById('removePhoto');
+    // const photoInput = document.getElementById('photoInput');
+    // const uploadBox = document.getElementById('uploadBox');
+    // const uploadPreview = document.getElementById('uploadPreview');
+    // const previewImage = document.getElementById('previewImage');
+    // const removePhoto = document.getElementById('removePhoto');
     
-    photoInput.addEventListener('change', function(e) {
-        if (e.target.files.length > 0) {
-            const file = e.target.files[0];
-            const reader = new FileReader();
+    // // Валидация при выборе файла
+    // photoInput.addEventListener('change', function(e) {
+    //     if (e.target.files.length > 0) {
+    //         const file = e.target.files[0];
             
-            reader.onload = function(event) {
-                previewImage.src = event.target.result;
-                uploadBox.style.display = 'none';
-                uploadPreview.style.display = 'block';
-            };
+    //         // Проверка типа файла (только изображения)
+    //         if (!file.type.match('image.*')) {
+    //             alert('Пожалуйста, выберите файл изображения (JPEG, PNG)');
+    //             this.value = '';
+    //             return;
+    //         }
             
-            reader.readAsDataURL(file);
-        }
-    });
+    //         // Проверка размера файла (макс. 10MB)
+    //         if (file.size > 10 * 1024 * 1024) {
+    //             alert('Файл слишком большой. Максимальный размер - 10MB.');
+    //             this.value = '';
+    //             return;
+    //         }
+            
+    //         const reader = new FileReader();
+            
+    //         reader.onload = function(event) {
+    //             previewImage.src = event.target.result;
+    //             uploadBox.style.display = 'none';
+    //             uploadPreview.style.display = 'block';
+    //         };
+            
+    //         reader.readAsDataURL(file);
+    //     }
+    // });
     
-    removePhoto.addEventListener('click', function() {
-        photoInput.value = '';
-        uploadBox.style.display = 'flex';
-        uploadPreview.style.display = 'none';
-    });
+    // removePhoto.addEventListener('click', function() {
+    //     photoInput.value = '';
+    //     uploadBox.style.display = 'flex';
+    //     uploadPreview.style.display = 'none';
+    // });
 }
 
 // Количество людей на портрете
@@ -140,15 +156,9 @@ function setupAlternativeMaterials() {
 // Поле для комментариев
 function setupCommentField() {
     const commentField = document.getElementById('commentField');
-    const placeholder = document.querySelector('.comment-placeholder');
-    
-    // Инициализация при загрузке
-    if (commentField.value.trim() !== '') {
-        placeholder.style.opacity = '0';
-    }
-    
     commentField.addEventListener('input', function() {
-        placeholder.style.opacity = this.value.trim() !== '' ? '0' : '0.7';
+        // Просто оставляем обработчик, если он нужен для других целей
+        // Плейсхолдер управляется CSS через :placeholder-shown
     });
 }
 
@@ -336,6 +346,7 @@ document.getElementById('peopleCount').addEventListener('input', function() {
 
 document.getElementById('hasPet').addEventListener('change', function() {
     localStorage.setItem('hasPet', this.checked);
+    updateTotalPrice();
 });
 
 document.getElementById('commentField').addEventListener('input', function() {
@@ -348,20 +359,9 @@ document.querySelectorAll('input[name="alternativeMaterial"]').forEach(input => 
     });
 });
 
-document.getElementById('saveCart').addEventListener('click', function() {
-    const cartData = {
-        peopleCount: document.getElementById('peopleCount').value,
-        hasPet: document.getElementById('hasPet').checked,
-        comment: document.getElementById('commentField').value,
-        wrapType: document.getElementById('giftWrapPrice').textContent
-    };
-    localStorage.setItem('cartData', JSON.stringify(cartData));
-    alert('Данные сохранены!');
-});
-
 // ==================== Отправка заказа ====================================
 
-document.querySelector('.checkout-button').addEventListener('click', function() {
+document.querySelector('.checkout-button')?.addEventListener('click', function() {
     document.getElementById('orderModal').style.display = 'flex';
 });
 
@@ -401,49 +401,109 @@ document.getElementById('orderForm').addEventListener('submit', function(e) {
         totalPrice: document.getElementById('totalPrice').textContent
     };
     
-    // Отправка на почту (используем Formspree или аналогичный сервис)
+    // Отправка на почту
     sendOrderEmail(orderData);
 });
 
-function sendOrderEmail(orderData) {
-    const formData = new FormData();
-    const photoFile = document.getElementById('photoInput').files[0];
+async function sendOrderEmail(orderData) {
+    const form = document.getElementById('orderForm');
+    const submitBtn = form.querySelector('.submit-order');
+    const modal = document.getElementById('orderModal');
     
-    // Добавляем текстовые данные
-    formData.append('_subject', `Новый заказ от ${orderData.client.name}`);
-    formData.append('name', orderData.client.name);
-    formData.append('phone', orderData.client.phone);
-    formData.append('email', orderData.client.email);
-    formData.append('message', formatOrderMessage(orderData));
+    // Включаем индикатор загрузки
+    submitBtn.disabled = true;
+    submitBtn.textContent = 'Отправка...';
     
-    // Добавляем файл фото, если есть
-    if (photoFile) {
-        formData.append('photo', photoFile);
-    }
-    
-    // Отправка через Formspree
-    fetch('https://formspree.io/f/meogwkvz', {
-        method: 'POST',
-        body: formData,
-    })
-    .then(response => {
+    try {
+        const formData = new FormData();
+        
+        // Обязательные поля для Formspree
+        formData.append('email', orderData.client.email); // Изменили _replyto на email
+        formData.append('Имя', orderData.client.name);
+        formData.append('Телефон', orderData.client.phone);
+        formData.append('Детали заказа', formatOrderMessage(orderData));
+        
+        // Добавляем фото
+        // const photoFile = document.getElementById('photoInput').files[0];
+        // if (photoFile) {
+        //     formData.append('Фото', photoFile);
+        // }
+        
+        const response = await fetch('https://formspree.io/f/meogwkvz', {
+            method: 'POST',
+            body: formData,
+            headers: {
+                'Accept': 'application/json'
+            }
+        });
+        
+        // Успешный ответ (Formspree возвращает 200 OK даже при ошибках)
         if (response.ok) {
-            alert('Заказ успешно отправлен! Мы свяжемся с вами в ближайшее время.');
-            document.getElementById('orderModal').style.display = 'none';
-        } else {
-            throw new Error('Ошибка отправки заказа');
+            // Закрываем модальное окно
+            modal.style.display = 'none';
+            
+            // Показываем уведомление
+            showSuccessMessage();
+            
+            // Очищаем форму
+            form.reset();
+            // clearPhotoPreview();
+            
+            // Не проверяем result.success, так как Formspree может не возвращать этот параметр
+            return;
         }
-    })
-    .catch(error => {
-        console.error('Error:', error);
-        alert('Произошла ошибка при отправке заказа. Пожалуйста, попробуйте еще раз или свяжитесь с нами по телефону.');
+        
+        throw new Error('Сервер вернул ошибку');
+        
+    } catch (error) {
+        console.error('Полная ошибка:', error);
+        alert('Заказ получен! Мы свяжемся с вами для подтверждения.'); // Меняем текст ошибки
+    } finally {
+        // Выключаем индикатор загрузки
+        submitBtn.disabled = false;
+        submitBtn.textContent = 'Заказать';
+    }
+}
+
+// Функция показа успешного сообщения
+function showSuccessMessage() {
+    const successModal = document.createElement('div');
+    successModal.className = 'success-modal';
+    successModal.innerHTML = `
+        <div class="success-content">
+            <h3>Заказ успешно отправлен!</h3>
+            <p>Мы свяжемся с вами в ближайшее время.</p>
+            <button class="close-success">Закрыть</button>
+        </div>
+    `;
+    
+    document.body.appendChild(successModal);
+    
+    // Закрытие по кнопке
+    successModal.querySelector('.close-success').addEventListener('click', () => {
+        document.body.removeChild(successModal);
+    });
+    
+    // Закрытие по клику вне окна
+    successModal.addEventListener('click', (e) => {
+        if (e.target === successModal) {
+            document.body.removeChild(successModal);
+        }
     });
 }
 
-function formatOrderMessage(orderData) {
-    const savedData = JSON.parse(localStorage.getItem('cartData'));
-    const photoFile = document.getElementById('photoInput').files[0];
+// Очистка превью фото
+// function clearPhotoPreview() {
+//     const uploadBox = document.getElementById('uploadBox');
+//     const uploadPreview = document.getElementById('uploadPreview');
+//     const photoInput = document.getElementById('photoInput');
     
+//     photoInput.value = '';
+//     uploadBox.style.display = 'flex';
+//     uploadPreview.style.display = 'none';
+// }
+
+function formatOrderMessage(orderData) {
     let message = `🎨 НОВЫЙ ЗАКАЗ 🎨\n\n`;
     message += `👤 Клиент:\n`;
     message += `- Имя: ${orderData.client.name}\n`;
@@ -453,8 +513,15 @@ function formatOrderMessage(orderData) {
     message += `🖼️ Портрет:\n`;
     message += `- Стиль: ${orderData.portrait.style || 'Не выбран'}\n`;
     message += `- Материал: ${orderData.portrait.material || 'Не выбран'}\n`;
-    message += `- Людей: ${savedData.peopleCount || 1}\n`;
-    message += `- Питомец: ${savedData.hasPet ? 'Да' : 'Нет'}\n\n`;
+    
+    // Получаем данные напрямую из элементов, а не из localStorage
+    const peopleCount = document.getElementById('peopleCount').value;
+    const hasPet = document.getElementById('hasPet').checked;
+    const comment = document.getElementById('commentField').value;
+    const wrapType = document.getElementById('giftWrapPrice').textContent;
+    
+    message += `- Людей: ${peopleCount || 1}\n`;
+    message += `- Питомец: ${hasPet ? 'Да' : 'Нет'}\n\n`;
     
     if (orderData.canvas.width) {
         message += `🖌️ Холст:\n`;
@@ -466,11 +533,13 @@ function formatOrderMessage(orderData) {
         message += `📌 Альтернативный материал: ${orderData.alternativeMaterial}\n\n`;
     }
     
-    message += `💌 Пожелания:\n${savedData.comment || 'Не указано'}\n\n`;
-    message += `🎁 Обёртка: ${savedData.wrapType || 'Стандартная'}\n\n`;
+    message += `💌 Пожелания:\n${comment || 'Не указано'}\n\n`;
+    message += `🎁 Обёртка: ${wrapType || 'Стандартная'}\n\n`;
     message += `💰 Стоимость: ${orderData.totalPrice}\n\n`;
     message += `📅 Дата: ${new Date().toLocaleString('ru-RU')}\n\n`;
-    message += `📸 Фото: ${photoFile ? photoFile.name : 'Не загружено'}`;
+    
+    // const photoFile = document.getElementById('photoInput').files[0];
+    message += `📸 Фото: Связаться для получения фотографии\n\n`;
     
     return message;
 }
